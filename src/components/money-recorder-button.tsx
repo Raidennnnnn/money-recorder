@@ -6,7 +6,7 @@ import FluentEmojiVideoGame from "./icon/fluent-emoji-video-game";
 import FluentEmojiWomansClothes from "./icon/fluent-emoji-womans-clothes";
 import { Button } from "./ui/button";
 import { useState } from "react";
-
+import CountUp from "react-countup";
 const ICON: Record<Category, React.ReactNode> = {
   [Category.CLOTH]: <FluentEmojiWomansClothes className="!w-12 !h-12" />,
   [Category.EAT]: <FluentEmojiFaceSavoringFood className="!w-12 !h-12" />,
@@ -69,12 +69,14 @@ export default function MoneyRecorderButton({
       <div className="relative z-10 flex items-center">
         {ICON[category]}
         <span className="text-4xl leading-9 font-extrabold self-end ml-4">
-          {records.confirmed.reduce((acc, record) => acc + record.amount, 0)}
+          <CountUp end={records.confirmed.reduce((acc, record) => acc + record.amount, 0)} duration={1} />
         </span>
         {records.unconfirmed && (
           <div className="self-end flex items-end text-red-600">
             <FluentArrowCurveUpRight20Filled className="!w-6 !h-6" />
-            <span className="text-xl leading-5 font-bold">{records.unconfirmed}</span>
+            <span className="text-xl leading-5 font-bold">
+              <CountUp end={Number(records.unconfirmed)} duration={0.5} />
+            </span>
           </div>
         )}
       </div>
