@@ -1,13 +1,9 @@
 import React from 'react'
-import MoneyRecorder from './MoneyRecorder'
+import MoneyRecorder from './components/money-recorder'
 import './App.css'
 
 const App: React.FC = () => {
-  return (
-    <div>
-      <MoneyRecorder />
-    </div>
-  )
+  return <MoneyRecorder />
 }
 
 export default App
