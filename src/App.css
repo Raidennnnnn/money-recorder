@@ -14,3 +14,7 @@
 .animate-grow {
   animation: grow 1.5s cubic-bezier(0.42, 0, 0.58, 1) forwards;
 }
+
+.transition-width {
+  transition: width 0.5s ease-in-out;
+}

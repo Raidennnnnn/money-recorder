@@ -1,81 +1,59 @@
-import { useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import { Input } from './ui/input';
 import MoneyRecorderButton from './money-recorder-button';
-import { PaymentRecords, Category } from '../types';
+import { PaymentRecords, Category, Month } from '../types';
+import { SetPast12MonthRecordsContext } from './record-context';
 
 export default function MoneyRecorder() {
+  const setPast12MonthRecords = useContext(SetPast12MonthRecordsContext);
+
   const [amount, setAmount] = useState<string>('');
   const [unConfirmedLocation, setUnConfirmedLocation] = useState<Category | null>(null);
-  const [records, setRecords] = useState<PaymentRecords>({
-    [Category.EAT]: {
-      confirmed: [],
-      unconfirmed: '',
-    },
-    [Category.CLOTH]: {
-      confirmed: [],
-      unconfirmed: '',
-    },
-    [Category.ENTERTAINMENT]: {
-      confirmed: [],
-      unconfirmed: '',
-    },
-    [Category.TRANSPORTATION]: {
-      confirmed: [],
-      unconfirmed: '',
-    },
-  });
-
-  useEffect(() => {
-    if (unConfirmedLocation) {
-      setRecords((prev) => ({
-        ...prev,
-        [unConfirmedLocation]: {
-          ...prev[unConfirmedLocation],
-          unconfirmed: amount,
-        },
-      }));
-    }
-  }, [amount, unConfirmedLocation]);
 
   return <div className="flex flex-col gap-2">
     <Input
       type="text"
       value={amount}
       placeholder="金额"
-      onChange={(e) => {
-        const value = e.target.value;
-        if (Number(value) >= 0) {
-          setAmount(value);
-        }
-      }}
+      onChange={handleInputChange}
     />
     <div className="flex flex-col gap-2">
       <MoneyRecorderButton
         category={Category.CLOTH}
-        records={records[Category.CLOTH]}
-        onClick={() => handlePreAddRecord(Category.CLOTH)}
-        onLongPress={() => handleAddRecord(Category.CLOTH)}
+        onClick={handlePreAddRecord}
+        onLongPress={handleAddRecord}
       />
       <MoneyRecorderButton
         category={Category.EAT}
-        records={records[Category.EAT]}
-        onClick={() => handlePreAddRecord(Category.EAT)}
-        onLongPress={() => handleAddRecord(Category.EAT)}
+        onClick={handlePreAddRecord}
+        onLongPress={handleAddRecord}
       />
       <MoneyRecorderButton
         category={Category.ENTERTAINMENT}
-        records={records[Category.ENTERTAINMENT]}
-        onClick={() => handlePreAddRecord(Category.ENTERTAINMENT)}
-        onLongPress={() => handleAddRecord(Category.ENTERTAINMENT)}
+        onClick={handlePreAddRecord}
+        onLongPress={handleAddRecord}
       />
       <MoneyRecorderButton
         category={Category.TRANSPORTATION}
-        records={records[Category.TRANSPORTATION]}
-        onClick={() => handlePreAddRecord(Category.TRANSPORTATION)}
-        onLongPress={() => handleAddRecord(Category.TRANSPORTATION)}
+        onClick={handlePreAddRecord}
+        onLongPress={handleAddRecord}
       />
     </div>
   </div>
+
+  function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const value = e.target.value;
+    if (Number(value) >= 0) {
+      setAmount(value);
+      if (unConfirmedLocation) {
+        setPast12MonthRecords((prev) => {
+          const [month, records] = prev.pop() as [Month, PaymentRecords];
+          records[unConfirmedLocation].unconfirmed = value;
+          return [...prev, [month, { ...records }]];
+        });
+      }
+    }
+  }
 
   function handlePreAddRecord(category: Category) {
     if (!amount) {
@@ -83,29 +61,41 @@ export default function MoneyRecorder() {
     }
 
     setUnConfirmedLocation(category);
-    setRecords((prev) => {
-      const newRecords = Object.entries(prev).reduce((acc, [key, value]) => ({
-        ...acc,
-        [key]: {
-          ...value,
-          unconfirmed: Number(key) === category ? amount : '',
-        },
-      }), {} as PaymentRecords);
-      return newRecords;
+    setPast12MonthRecords((prev) => {
+      const latest = prev[prev.length - 1];
+      if (!latest) {
+        return prev;
+      }
+      const [month, records] = latest;
+
+      return [
+        ...prev.slice(0, -1), 
+        [
+          month, 
+          Object.entries(records)
+            .reduce((acc, [key, value]) => {
+              acc[Number(key) as Category] = { ...value, unconfirmed: Number(key) === category ? amount : '' };
+              return acc;
+            }, {} as PaymentRecords)
+        ]
+      ]
     });
   }
 
-  function handleAddRecord(category: Category) {
-    if (!amount) {
-      return;
-    }
-
-    setRecords({
-      ...records,
-      [category]: {
-        unconfirmed: '',
-        confirmed: [...records[category].confirmed, { id: Date.now(), amount: Number(amount) }],
-      },
+  function handleAddRecord(category: Category, amount: number) {
+    setPast12MonthRecords((prev) => {
+      const latest = prev[prev.length - 1];
+      if (!latest) {
+        return prev;
+      }
+      const [month, records] = latest;
+      return [...prev.slice(0, -1), [month, { 
+        ...records,
+        [category]: {
+          unconfirmed: '',
+          confirmed: records[category].confirmed + amount,
+        }
+      }]];
     });
     setUnConfirmedLocation(null);
     setAmount('');
