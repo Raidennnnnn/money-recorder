@@ -43,6 +43,11 @@ export default function MoneyRecorderButton({
   const ratio = confirmed === 0 ? 0 : (confirmed / totalConfirmed);
 
   const handlePressStart = () => {
+    if (!records[category].unconfirmed) {
+      onClick(category);
+      return;
+    }
+
     setIsPressing(true);
 
     const timer = setTimeout(() => {
@@ -56,10 +61,6 @@ export default function MoneyRecorderButton({
     if (pressTimer) {
       clearTimeout(pressTimer);
       setPressTimer(null);
-
-      if (isPressing) {
-        onClick(category);
-      }
     }
     setIsPressing(false);
   };
@@ -67,7 +68,7 @@ export default function MoneyRecorderButton({
   return (
     <Button
       variant="outline"
-      className="relative justify-start h-fit w-full p-4 overflow-hidden"
+      className="relative justify-start h-fit w-full p-3 overflow-hidden select-none"
       onTouchStart={handlePressStart}
       onTouchEnd={handlePressEnd}
       onContextMenu={handleContextMenu}

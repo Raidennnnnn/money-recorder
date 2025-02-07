@@ -1,9 +1,10 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useState, Suspense, lazy } from 'react'
 import MoneyRecorder from './components/money-recorder'
 import './App.css'
 import { Past12MonthRecordsContext, RecordContext, SetPast12MonthRecordsContext, TotalConfirmedContext, defaultPast12MonthRecords, defaultRecords, thisMonth } from './components/record-context';
 import { AllPaymentRecords } from './types';
-import { Past12MonthChart } from './components/past-12-month-chart';
+
+const Past12MonthChart = lazy(() => import('./components/past-12-month-chart'));
 
 export default function App() {
   const [past12MonthRecords, setPast12MonthRecords] = useState<AllPaymentRecords>([]);
@@ -49,8 +50,10 @@ export default function App() {
         <RecordContext.Provider value={thisMonthRecords}>
             <TotalConfirmedContext.Provider value={totalConfirmed}>
               <MoneyRecorder />
-              <div className="mt-4 text-xl font-bold">Past 12 Month</div>
-              <Past12MonthChart />
+              <div className="mt-4 mb-2 text-xl font-bold">Past 12 Month</div>
+              <Suspense fallback={<div className="w-full h-48 bg-gray-200 rounded-md"></div>}>
+                <Past12MonthChart />
+              </Suspense>
             </TotalConfirmedContext.Provider> 
         </RecordContext.Provider>
       </SetPast12MonthRecordsContext.Provider>

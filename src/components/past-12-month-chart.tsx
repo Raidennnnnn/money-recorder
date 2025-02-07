@@ -11,7 +11,7 @@ const chartConfig = {
   },
 } satisfies ChartConfig
 
-export function Past12MonthChart() {
+export default function Past12MonthChart() {
   const past12MonthRecords = useContext(Past12MonthRecordsContext);
 
   const chartData = (function() {
@@ -34,7 +34,7 @@ export function Past12MonthChart() {
     return data;
   })();
 
-  return <ChartContainer config={chartConfig} className="min-h-52 w-full">
+  return <ChartContainer config={chartConfig} className="h-48 w-full">
     <BarChart accessibilityLayer data={chartData}>
       <XAxis 
         dataKey="month" 
