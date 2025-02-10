@@ -1,41 +1,61 @@
-import { PaymentRecords, Category, AllPaymentRecords, Month } from "@/types";
+import { PaymentRecords, Category, AllPaymentRecords, Month, AllPaymentRecordsUnion } from "@/types";
 import { createContext } from "react";
 
 export const defaultRecords: PaymentRecords = {
   [Category.EAT]: {
-    confirmed: 0,
+    confirmed: [],
     unconfirmed: '',
   },
   [Category.CLOTH]: {
-    confirmed: 0,
+    confirmed: [],
     unconfirmed: '',
   },
   [Category.ENTERTAINMENT]: {
-    confirmed: 0,
+    confirmed: [],
     unconfirmed: '',
   },
   [Category.TRANSPORTATION]: {
-    confirmed: 0,
+    confirmed: [],
     unconfirmed: '',
   },
   [Category.HEALTH]: {
-    confirmed: 0,
+    confirmed: [],
     unconfirmed: '',
   },
   [Category.DAILY]: {
-    confirmed: 0,
+    confirmed: [],
     unconfirmed: '',
   },
   [Category.OTHER]: {
-    confirmed: 0,
+    confirmed: [],
     unconfirmed: '',
   },
 }
 
 export const thisMonth = new Date().getMonth() as Month;
-export const defaultPast12MonthRecords: AllPaymentRecords = localStorage.getItem('allRecords') 
-  ? JSON.parse(localStorage.getItem('allRecords') as string) 
-  : [];
+export const defaultPast12MonthRecords: AllPaymentRecords = function () {
+  const allRecords = localStorage.getItem('allRecords');
+  if (!allRecords) {
+    return [];
+  }
+
+  const parsedRecords = JSON.parse(allRecords) as AllPaymentRecordsUnion;
+  const result = parsedRecords.map(([month, records]) => {
+    Object.entries(records).forEach(([, record]) => {
+      if (typeof record.confirmed === 'number') {
+        record.confirmed = [{
+          timeStamp: new Date(new Date().getFullYear(), month).getTime(),
+          amount: record.confirmed,
+        }];
+      }
+    });
+    return [month, {
+      ...defaultRecords,
+      ...records,
+    }] as [Month, PaymentRecords];
+  });
+  return result;
+}();
 
 export const Past12MonthRecordsContext = createContext<AllPaymentRecords>(defaultPast12MonthRecords);
 export const SetPast12MonthRecordsContext = createContext<React.Dispatch<React.SetStateAction<AllPaymentRecords>>>(() => {});

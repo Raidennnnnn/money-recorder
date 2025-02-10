@@ -27,7 +27,7 @@ const BACKGROUND_COLORS: Record<Category, string> = {
   [Category.EAT]:"bg-rose-200",
   [Category.ENTERTAINMENT]: "bg-violet-200",
   [Category.TRANSPORTATION]: "bg-blue-200",
-  [Category.HEALTH]: "bg-green-200",
+  [Category.HEALTH]: "bg-yellow-200",
   [Category.DAILY]: "bg-fuchsia-200",
   [Category.OTHER]: "bg-green-200",
 }
@@ -48,7 +48,7 @@ export default function MoneyRecorderButton({
   const [pressTimer, setPressTimer] = useState<NodeJS.Timeout | null>(null);
   const [isPressing, setIsPressing] = useState(false);
 
-  const confirmed = records[category].confirmed;
+  const confirmed = records[category].confirmed.reduce((acc, record) => acc + record.amount, 0);
   const ratio = confirmed === 0 ? 0 : (confirmed / totalConfirmed);
 
   const handlePressStart = () => {
@@ -96,6 +96,12 @@ export default function MoneyRecorderButton({
             <FluentArrowCurveUpRight20Filled className="!w-6 !h-6" />
             <span className="text-xl leading-5 font-bold">
               <CountUp end={Number(records[category].unconfirmed)} duration={0.5} />
+              { confirmed > 0 && (
+                <>
+                  =
+                  <CountUp end={confirmed + Number(records[category].unconfirmed)} duration={0.5} />
+                </>
+              )}
             </span>
           </div>
         )}

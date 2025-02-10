@@ -18,7 +18,10 @@ export default function Past12MonthChart() {
     const data = past12MonthRecords.map(([month, records]) => {
       return {
         month,
-        records: Object.values(records).map((record) => record.confirmed).reduce((acc, record) => acc + record, 0),
+        records: Object
+          .values(records)
+          .map((record) => record.confirmed.reduce((acc, record) => acc + record.amount, 0))
+          .reduce((acc, record) => acc + record, 0),
       };
     });
     

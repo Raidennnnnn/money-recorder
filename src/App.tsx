@@ -41,7 +41,9 @@ export default function App() {
   }, [past12MonthRecords]);
 
   const totalConfirmed = useMemo(() => {
-    return Object.values(thisMonthRecords).reduce((acc, record) => acc + record.confirmed, 0);
+    return Object
+      .values(thisMonthRecords)
+      .reduce((acc, record) => acc + record.confirmed.reduce((acc, record) => acc + record.amount, 0), 0);
   }, [thisMonthRecords]);
 
   return (

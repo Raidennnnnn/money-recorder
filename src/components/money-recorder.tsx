@@ -108,7 +108,10 @@ export default function MoneyRecorder() {
         ...records,
         [category]: {
           unconfirmed: '',
-          confirmed: records[category].confirmed + amount,
+          confirmed: [...records[category].confirmed, {
+            timeStamp: new Date().getTime(),
+            amount: Number(amount),
+          }],
         }
       }]];
     });
