@@ -1,26 +1,35 @@
 import { Category } from "@/types";
 import FluentArrowCurveUpRight20Filled from "./icon/fluent-arrow-curve-up-right-20-filled";
-import FluentEmojiFaceSavoringFood from "./icon/fluent-emoji-face-savoring-food";
-import FluentEmojiSportUtilityVehicle from "./icon/fluent-emoji-sport-utility-vehicle";
+import FluentEmojiChopsticks from "./icon/fluent-emoji-chopsticks";
 import FluentEmojiVideoGame from "./icon/fluent-emoji-video-game";
 import FluentEmojiWomansClothes from "./icon/fluent-emoji-womans-clothes";
 import { Button } from "./ui/button";
 import { useContext, useState } from "react";
 import CountUp from "react-countup";
 import { RecordContext, TotalConfirmedContext } from "./record-context";
+import FluentEmojiSportUtilityVehicle from "./icon/fluent-emoji-sport-utility-vehicle";
+import FluentEmojiFaceWithThermometer from "./icon/fluent-emoji-face-with-thermometer";
+import FluentEmojiSoap from "./icon/fluent-emoji-soap";
+import FluentEmojiMoneyWithWings from "./icon/fluent-emoji-money-with-wings";
 
 const ICON: Record<Category, React.ReactNode> = {
   [Category.CLOTH]: <FluentEmojiWomansClothes className="!w-12 !h-12" />,
-  [Category.EAT]: <FluentEmojiFaceSavoringFood className="!w-12 !h-12" />,
+  [Category.EAT]: <FluentEmojiChopsticks className="!w-12 !h-12" />,
   [Category.ENTERTAINMENT]: <FluentEmojiVideoGame className="!w-12 !h-12" />,
   [Category.TRANSPORTATION]: <FluentEmojiSportUtilityVehicle className="!w-12 !h-12" />,
+  [Category.HEALTH]: <FluentEmojiFaceWithThermometer className="!w-12 !h-12" />,
+  [Category.DAILY]: <FluentEmojiSoap className="!w-12 !h-12" />,
+  [Category.OTHER]: <FluentEmojiMoneyWithWings className="!w-12 !h-12" />,
 }
 
 const BACKGROUND_COLORS: Record<Category, string> = {
   [Category.CLOTH]: "bg-pink-200",
-  [Category.EAT]:"bg-yellow-200",
+  [Category.EAT]:"bg-rose-200",
   [Category.ENTERTAINMENT]: "bg-violet-200",
   [Category.TRANSPORTATION]: "bg-blue-200",
+  [Category.HEALTH]: "bg-green-200",
+  [Category.DAILY]: "bg-fuchsia-200",
+  [Category.OTHER]: "bg-green-200",
 }
 
 interface MoneyRecorderButtonProps {

@@ -38,6 +38,21 @@ export default function MoneyRecorder() {
         onClick={handlePreAddRecord}
         onLongPress={handleAddRecord}
       />
+      <MoneyRecorderButton
+        category={Category.HEALTH}
+        onClick={handlePreAddRecord}
+        onLongPress={handleAddRecord}
+      />
+      <MoneyRecorderButton
+        category={Category.DAILY}
+        onClick={handlePreAddRecord}
+        onLongPress={handleAddRecord}
+      />
+      <MoneyRecorderButton
+        category={Category.OTHER}
+        onClick={handlePreAddRecord}
+        onLongPress={handleAddRecord}
+      />
     </div>
   </div>
 

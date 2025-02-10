@@ -18,6 +18,18 @@ export const defaultRecords: PaymentRecords = {
     confirmed: 0,
     unconfirmed: '',
   },
+  [Category.HEALTH]: {
+    confirmed: 0,
+    unconfirmed: '',
+  },
+  [Category.DAILY]: {
+    confirmed: 0,
+    unconfirmed: '',
+  },
+  [Category.OTHER]: {
+    confirmed: 0,
+    unconfirmed: '',
+  },
 }
 
 export const thisMonth = new Date().getMonth() as Month;
