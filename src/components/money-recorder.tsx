@@ -2,16 +2,18 @@ import { useContext, useState } from 'react';
 import { Input } from './ui/input';
 import MoneyRecorderButton from './money-recorder-button';
 import { PaymentRecords, Category, Month } from '../types';
-import { Past12MonthRecordsContext, SetPast12MonthRecordsContext } from './record-context';
+import { Past12MonthRecordsContext, SetPast12MonthRecordsContext, TotalConfirmedContext } from './record-context';
 
 const categorys = Object.values(Category).filter((c): c is Category => !isNaN(Number(c)));
 
 export default function MoneyRecorder() {
   const past12MonthRecords = useContext(Past12MonthRecordsContext);
+  const totalConfirmed = useContext(TotalConfirmedContext);
   const setPast12MonthRecords = useContext(SetPast12MonthRecordsContext);
 
   const [amount, setAmount] = useState<string>('');
   const [unConfirmedLocation, setUnConfirmedLocation] = useState<Category | null>(null);
+
 
   return <div className="flex flex-col gap-2">
     <Input
@@ -32,6 +34,10 @@ export default function MoneyRecorder() {
         ))
       }
     </div>}
+    <div>
+      <span className="text-lg font-bold">总计：</span>
+      <span className="text-lg font-bold">{totalConfirmed}</span>
+    </div>
   </div>
 
   function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {

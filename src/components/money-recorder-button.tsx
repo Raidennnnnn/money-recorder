@@ -14,13 +14,13 @@ import { ArrowUpRightIcon, ChevronsLeftRightEllipsisIcon, EqualIcon } from "luci
 import { useNavigateWithTransition } from "./use-navi-with-transition";
 
 const ICON: Record<Category, React.ReactNode> = {
-  [Category.CLOTH]: <FluentEmojiWomansClothes className="!w-12 !h-12" />,
-  [Category.EAT]: <FluentEmojiChopsticks className="!w-12 !h-12" />,
-  [Category.ENTERTAINMENT]: <FluentEmojiVideoGame className="!w-12 !h-12" />,
-  [Category.TRANSPORTATION]: <FluentEmojiSportUtilityVehicle className="!w-12 !h-12" />,
-  [Category.HEALTH]: <FluentEmojiFaceWithThermometer className="!w-12 !h-12" />,
-  [Category.DAILY]: <FluentEmojiSoap className="!w-12 !h-12" />,
-  [Category.OTHER]: <FluentEmojiMoneyWithWings className="!w-12 !h-12" />,
+  [Category.CLOTH]: <FluentEmojiWomansClothes className="!w-11 !h-11" />,
+  [Category.EAT]: <FluentEmojiChopsticks className="!w-11 !h-11" />,
+  [Category.ENTERTAINMENT]: <FluentEmojiVideoGame className="!w-11 !h-11" />,
+  [Category.TRANSPORTATION]: <FluentEmojiSportUtilityVehicle className="!w-11 !h-11" />,
+  [Category.HEALTH]: <FluentEmojiFaceWithThermometer className="!w-11 !h-11" />,
+  [Category.DAILY]: <FluentEmojiSoap className="!w-11 !h-11" />,
+  [Category.OTHER]: <FluentEmojiMoneyWithWings className="!w-11 !h-11" />,
 }
 
 const BACKGROUND_COLORS: Record<Category, string> = {
@@ -56,7 +56,7 @@ export default function MoneyRecorderButton({
   return (
     <Button
       variant="outline"
-      className={`relative justify-start h-fit w-full p-3 overflow-hidden select-none`}
+      className={`relative justify-start h-fit w-full p-2.5 overflow-hidden select-none`}
       onTouchStart={handlePressStart}
       onTouchEnd={handlePressEnd}
     >
