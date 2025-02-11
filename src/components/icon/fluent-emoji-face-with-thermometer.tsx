@@ -1,4 +1,4 @@
-import { SVGProps } from 'react'
+import React, { SVGProps } from 'react'
 
 export function FluentEmojiFaceWithThermometer(props: SVGProps<SVGSVGElement>) {
   return (

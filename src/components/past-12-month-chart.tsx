@@ -6,6 +6,7 @@ import { Month } from "@/types";
 import { HomeIcon } from "lucide-react";
 import { Button } from "./ui/button";
 import { useNavigateWithTransition } from "./use-navi-with-transition";
+import PlaceHolder from "./place-holder";
 
 const chartConfig = {
   records: {
@@ -42,6 +43,7 @@ export default function Past12MonthChart() {
   })();
 
   return <>
+    <PlaceHolder />
     <ChartContainer config={chartConfig}>
       <BarChart accessibilityLayer data={chartData}>
         <XAxis 

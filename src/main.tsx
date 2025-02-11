@@ -14,7 +14,7 @@ createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <RecordsProviders>
       <HashRouter>
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<div className="h-screen flex items-center justify-center">Loading...</div>}>
           <Routes>
             <Route path="/" element={<App />} />
             <Route path="/:category" element={<CategoryDetail />} />
