@@ -11,11 +11,11 @@ export type PaymentRecord = {
   unconfirmed: string;
 }
 
-type PaymentRecordUnion = PaymentRecordDeprecated | PaymentRecord;
+export type PaymentRecordUnion = PaymentRecordDeprecated | PaymentRecord;
 
 export enum Category {
-  EAT,
   CLOTH,
+  EAT,
   ENTERTAINMENT,
   TRANSPORTATION,
   HEALTH,

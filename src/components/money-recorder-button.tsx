@@ -1,5 +1,4 @@
 import { Category } from "@/types";
-import FluentArrowCurveUpRight20Filled from "./icon/fluent-arrow-curve-up-right-20-filled";
 import FluentEmojiChopsticks from "./icon/fluent-emoji-chopsticks";
 import FluentEmojiVideoGame from "./icon/fluent-emoji-video-game";
 import FluentEmojiWomansClothes from "./icon/fluent-emoji-womans-clothes";
@@ -11,6 +10,8 @@ import FluentEmojiSportUtilityVehicle from "./icon/fluent-emoji-sport-utility-ve
 import FluentEmojiFaceWithThermometer from "./icon/fluent-emoji-face-with-thermometer";
 import FluentEmojiSoap from "./icon/fluent-emoji-soap";
 import FluentEmojiMoneyWithWings from "./icon/fluent-emoji-money-with-wings";
+import { ArrowUpRightIcon, ChevronsLeftRightEllipsisIcon, EqualIcon } from "lucide-react";
+import { useNavigateWithTransition } from "./use-navi-with-transition";
 
 const ICON: Record<Category, React.ReactNode> = {
   [Category.CLOTH]: <FluentEmojiWomansClothes className="!w-12 !h-12" />,
@@ -43,6 +44,7 @@ export default function MoneyRecorderButton({
   onClick,
   onLongPress,
 }: MoneyRecorderButtonProps) {
+  const navigate = useNavigateWithTransition();
   const records = useContext(RecordContext);
   const totalConfirmed = useContext(TotalConfirmedContext);
   const [pressTimer, setPressTimer] = useState<NodeJS.Timeout | null>(null);
@@ -51,7 +53,47 @@ export default function MoneyRecorderButton({
   const confirmed = records[category].confirmed.reduce((acc, record) => acc + record.amount, 0);
   const ratio = confirmed === 0 ? 0 : (confirmed / totalConfirmed);
 
-  const handlePressStart = () => {
+  return (
+    <Button
+      variant="outline"
+      className={`relative justify-start h-fit w-full p-3 overflow-hidden select-none`}
+      onTouchStart={handlePressStart}
+      onTouchEnd={handlePressEnd}
+    >
+      <div
+        className={`absolute inset-0 ${BACKGROUND_COLORS[category]} transition-width duration-500 ease-in-out`}
+        style={{ width: `${ratio * 100}%` }}
+      ></div>
+      <div className="relative z-20 flex items-end gap-2">
+        {ICON[category]}
+        <div className="text-3xl leading-9 font-bold flex items-end gap-1 no-click" onClick={() => navigate(`/${category}`)}>
+          <CountUp end={confirmed} duration={1} />
+          <ChevronsLeftRightEllipsisIcon className="!w-5 !h-5 text-muted-foreground" />
+        </div>
+        {records[category].unconfirmed && (
+          <div className="font-bold text-red-600 leading-4">
+            <div className="flex">
+              <ArrowUpRightIcon className="!w-4 !h-4" />
+              <CountUp end={Number(records[category].unconfirmed)} duration={0.5} />
+            </div>
+            <div className="flex">
+              <EqualIcon className="!w-4 !h-4" />
+              <CountUp end={confirmed + Number(records[category].unconfirmed)} duration={0.5} />
+            </div>
+          </div>
+        )}
+      </div>
+      {isPressing && (
+        <div className="absolute bottom-0 left-0 h-1 bg-destructive animate-grow"></div>
+      )}
+    </Button>
+  );
+  
+  function handlePressStart(e: React.TouchEvent<HTMLButtonElement>) {
+    if ((e.target as HTMLElement).closest('.no-click')) {
+      return;
+    }
+    
     if (!records[category].unconfirmed) {
       onClick(category);
       return;
@@ -66,54 +108,11 @@ export default function MoneyRecorderButton({
     setPressTimer(timer);
   };
 
-  const handlePressEnd = () => {
+  function handlePressEnd() {
     if (pressTimer) {
       clearTimeout(pressTimer);
       setPressTimer(null);
+      setIsPressing(false);
     }
-    setIsPressing(false);
   };
-
-  return (
-    <Button
-      variant="outline"
-      className="relative justify-start h-fit w-full p-3 overflow-hidden select-none"
-      onTouchStart={handlePressStart}
-      onTouchEnd={handlePressEnd}
-      onContextMenu={handleContextMenu}
-    >
-      <div
-        className={`absolute inset-0 ${BACKGROUND_COLORS[category]} transition-width duration-500 ease-in-out`}
-        style={{ width: `${ratio * 100}%` }}
-      ></div>
-      <div className="relative z-20 flex items-center">
-        {ICON[category]}
-        <span className="text-4xl leading-9 font-extrabold self-end ml-4">
-          <CountUp end={confirmed} duration={1} />
-        </span>
-        {records[category].unconfirmed && (
-          <div className="self-end flex items-end text-red-600">
-            <FluentArrowCurveUpRight20Filled className="!w-6 !h-6" />
-            <span className="text-xl leading-5 font-bold">
-              <CountUp end={Number(records[category].unconfirmed)} duration={0.5} />
-              { confirmed > 0 && (
-                <>
-                  =
-                  <CountUp end={confirmed + Number(records[category].unconfirmed)} duration={0.5} />
-                </>
-              )}
-            </span>
-          </div>
-        )}
-      </div>
-      {isPressing && (
-        <div className="absolute bottom-0 left-0 h-1 bg-destructive animate-grow"></div>
-      )}
-    </Button>
-  );
-
-  function handleContextMenu(e: React.MouseEvent | React.TouchEvent) {
-    e.preventDefault();
-    return false;
-  }
 }

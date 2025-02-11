@@ -3,6 +3,9 @@ import { ChartContainer, ChartTooltip, ChartTooltipContent, type ChartConfig } f
 import { Past12MonthRecordsContext } from "./record-context";
 import { useContext } from "react";
 import { Month } from "@/types";
+import { HomeIcon } from "lucide-react";
+import { Button } from "./ui/button";
+import { useNavigateWithTransition } from "./use-navi-with-transition";
 
 const chartConfig = {
   records: {
@@ -12,6 +15,7 @@ const chartConfig = {
 } satisfies ChartConfig
 
 export default function Past12MonthChart() {
+  const navigate = useNavigateWithTransition();
   const past12MonthRecords = useContext(Past12MonthRecordsContext);
 
   const chartData = (function() {
@@ -37,17 +41,26 @@ export default function Past12MonthChart() {
     return data;
   })();
 
-  return <ChartContainer config={chartConfig} className="h-48 w-full">
-    <BarChart accessibilityLayer data={chartData}>
-      <XAxis 
-        dataKey="month" 
-        tickLine={false}
-        tickMargin={10}
-        axisLine={false}
-        tickFormatter={(value: Month) => String(value + 1)} 
-      />
-      <ChartTooltip content={<ChartTooltipContent />} />
-      <Bar dataKey="records" fill="var(--color-records)" radius={4} />
-    </BarChart>
-  </ChartContainer>;
+  return <>
+    <ChartContainer config={chartConfig}>
+      <BarChart accessibilityLayer data={chartData}>
+        <XAxis 
+          dataKey="month" 
+          tickLine={false}
+          tickMargin={10}
+          axisLine={false}
+          tickFormatter={(value: Month) => String(value + 1)} 
+        />
+        <ChartTooltip content={<ChartTooltipContent />} />
+        <Bar dataKey="records" fill="var(--color-records)" radius={4} />
+      </BarChart>
+    </ChartContainer>
+    <Button 
+      variant="outline" 
+      className="fixed bottom-4 right-4 px-2.5" 
+      onClick={() => navigate('/')}
+    >
+      <HomeIcon className="w-4 h-4" />
+    </Button>
+  </>;
 }

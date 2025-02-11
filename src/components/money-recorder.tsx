@@ -2,9 +2,12 @@ import { useContext, useState } from 'react';
 import { Input } from './ui/input';
 import MoneyRecorderButton from './money-recorder-button';
 import { PaymentRecords, Category, Month } from '../types';
-import { SetPast12MonthRecordsContext } from './record-context';
+import { Past12MonthRecordsContext, SetPast12MonthRecordsContext } from './record-context';
+
+const categorys = Object.values(Category).filter((c): c is Category => !isNaN(Number(c)));
 
 export default function MoneyRecorder() {
+  const past12MonthRecords = useContext(Past12MonthRecordsContext);
   const setPast12MonthRecords = useContext(SetPast12MonthRecordsContext);
 
   const [amount, setAmount] = useState<string>('');
@@ -17,43 +20,18 @@ export default function MoneyRecorder() {
       placeholder="金额"
       onChange={handleInputChange}
     />
-    <div className="flex flex-col gap-2">
-      <MoneyRecorderButton
-        category={Category.CLOTH}
-        onClick={handlePreAddRecord}
-        onLongPress={handleAddRecord}
-      />
-      <MoneyRecorderButton
-        category={Category.EAT}
-        onClick={handlePreAddRecord}
-        onLongPress={handleAddRecord}
-      />
-      <MoneyRecorderButton
-        category={Category.ENTERTAINMENT}
-        onClick={handlePreAddRecord}
-        onLongPress={handleAddRecord}
-      />
-      <MoneyRecorderButton
-        category={Category.TRANSPORTATION}
-        onClick={handlePreAddRecord}
-        onLongPress={handleAddRecord}
-      />
-      <MoneyRecorderButton
-        category={Category.HEALTH}
-        onClick={handlePreAddRecord}
-        onLongPress={handleAddRecord}
-      />
-      <MoneyRecorderButton
-        category={Category.DAILY}
-        onClick={handlePreAddRecord}
-        onLongPress={handleAddRecord}
-      />
-      <MoneyRecorderButton
-        category={Category.OTHER}
-        onClick={handlePreAddRecord}
-        onLongPress={handleAddRecord}
-      />
-    </div>
+    { past12MonthRecords.length > 0 && <div className="flex flex-col gap-2">
+      {
+        categorys.map((category) => (
+          <MoneyRecorderButton
+            key={category}
+            category={category}
+            onClick={handlePreAddRecord}
+            onLongPress={handleAddRecord}
+          />
+        ))
+      }
+    </div>}
   </div>
 
   function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
