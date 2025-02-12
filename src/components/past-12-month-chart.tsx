@@ -3,9 +3,7 @@ import { ChartContainer, ChartTooltip, ChartTooltipContent, type ChartConfig } f
 import { Past12MonthRecordsContext } from "./record-context";
 import { Suspense, lazy, useContext } from "react";
 import { Month } from "@/types";
-import { HomeIcon } from "lucide-react";
-import { Button } from "./ui/button";
-import { useNavigateWithTransition } from "./use-navi-with-transition";
+import BackHomeButton from "./back-home-button";
 
 const PlaceHolder = lazy(() => import("./place-holder"));
 
@@ -17,7 +15,6 @@ const chartConfig = {
 } satisfies ChartConfig
 
 export default function Past12MonthChart() {
-  const navigate = useNavigateWithTransition();
   const past12MonthRecords = useContext(Past12MonthRecordsContext);
 
   const chartData = (function() {
@@ -62,12 +59,6 @@ export default function Past12MonthChart() {
         <Bar dataKey="records" fill="var(--color-records)" radius={4} />
       </BarChart>
     </ChartContainer>
-    <Button 
-      variant="outline" 
-      className="fixed bottom-8 right-4 px-2.5" 
-      onClick={() => navigate('/')}
-    >
-      <HomeIcon className="w-4 h-4" />
-    </Button>
+    <BackHomeButton />
   </>;
 }

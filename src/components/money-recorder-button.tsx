@@ -66,7 +66,7 @@ export default function MoneyRecorderButton({
       ></div>
       <div className="relative z-20 flex items-end gap-2">
         {ICON[category]}
-        <div className="text-3xl leading-9 font-bold flex items-end gap-1" onClick={() => navigate(`/${category}`)}>
+        <div className="text-3xl leading-9 font-bold flex items-end gap-1" onClick={() => navigate(`/detail/${category}`)}>
           <CountUp end={confirmed} duration={1} />
           <Button variant="ghost" size="icon" className="no-click p-[2px] h-fit w-fit">
             <ChevronsLeftRightEllipsisIcon className="!w-5 !h-5 text-muted-foreground" />
