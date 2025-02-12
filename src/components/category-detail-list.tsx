@@ -3,7 +3,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from './
 import { PaymentRecord, Category } from '../types';
 import { SetPast12MonthRecordsContext } from './record-context';
 import { Separator } from '@radix-ui/react-separator';
-import { XIcon } from 'lucide-react';
+import { Undo2, XIcon } from 'lucide-react';
 
 export default function CategoryDetailList({ records, category }: { records: PaymentRecord, category: Category }) {
   const setPast12MonthRecords = useContext(SetPast12MonthRecordsContext);
@@ -39,8 +39,12 @@ export default function CategoryDetailList({ records, category }: { records: Pay
             <Fragment key={record.timeStamp}>
               <div className={`${index < records.length - 1 ? "py-2" : "pt-2"} flex items-center justify-between`}>
                 <span className="text-muted-foreground">{new Date(record.timeStamp).toLocaleTimeString()}</span>
-                <span>{record.amount}</span>
-                <XIcon className="text-destructive" onClick={() => deleteRecord(record.timeStamp)} />
+                <span className={`${record.removed ? "line-through" : ""}`}>{record.amount}</span>
+                {
+                  record.removed 
+                    ? <Undo2 onClick={() => deleteRecord(record.timeStamp)} />
+                    : <XIcon className="text-destructive" onClick={() => deleteRecord(record.timeStamp)} />
+                }
               </div>
               {index < records.length - 1 && <Separator />}
             </Fragment>
@@ -54,7 +58,9 @@ export default function CategoryDetailList({ records, category }: { records: Pay
     function deleteRecord(timeStamp: number) {
       const updatedRecords = {
         ...records,
-        confirmed: records.confirmed.filter(record => record.timeStamp !== timeStamp)
+        confirmed: records.confirmed.map(record => record.timeStamp === timeStamp 
+            ? { ...record, removed: !record.removed } 
+            : record)
       };
       setPast12MonthRecords((prev) => {
         const [month, records] = prev[prev.length - 1];

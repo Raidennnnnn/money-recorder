@@ -39,7 +39,7 @@ export function RecordsProviders({children}: {children: React.ReactNode}) {
   const totalConfirmed = useMemo(() => {
     return Object
       .values(thisMonthRecords)
-      .reduce((acc, record) => acc + record.confirmed.reduce((acc, record) => acc + record.amount, 0), 0);
+      .reduce((acc, record) => acc + record.confirmed.reduce((acc, record) => acc + (record.removed ? 0 : record.amount), 0), 0);
   }, [thisMonthRecords]);
 
   return <Past12MonthRecordsContext.Provider value={past12MonthRecords}>

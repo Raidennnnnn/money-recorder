@@ -46,6 +46,7 @@ export const defaultPast12MonthRecords: AllPaymentRecords = function () {
         record.confirmed = [{
           timeStamp: new Date(new Date().getFullYear(), month).getTime(),
           amount: record.confirmed,
+          removed: false,
         }];
       }
     });

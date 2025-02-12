@@ -50,7 +50,7 @@ export default function MoneyRecorderButton({
   const [pressTimer, setPressTimer] = useState<NodeJS.Timeout | null>(null);
   const [isPressing, setIsPressing] = useState(false);
 
-  const confirmed = records[category].confirmed.reduce((acc, record) => acc + record.amount, 0);
+  const confirmed = records[category].confirmed.reduce((acc, record) => acc + (record.removed ? 0 : record.amount), 0);
   const ratio = confirmed === 0 ? 0 : (confirmed / totalConfirmed);
 
   return (
@@ -66,7 +66,7 @@ export default function MoneyRecorderButton({
       ></div>
       <div className="relative z-20 flex items-end gap-2">
         {ICON[category]}
-        <div className="text-3xl leading-9 font-bold flex items-end gap-1" >
+        <div className="text-3xl leading-9 font-bold flex items-end gap-2" >
           <CountUp end={confirmed} duration={1} />
           <div className="bg-secondary/50 rounded no-click p-[2px] h-fit w-fit" onClick={() => navigate(`/detail/${category}`)}>
             <ChevronsLeftRightEllipsisIcon className="!w-5 !h-5 text-muted-foreground" />
