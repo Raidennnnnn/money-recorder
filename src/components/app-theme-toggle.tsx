@@ -39,7 +39,7 @@ export default function ThemeToggle() {
     </Button>
   )
 
-  async function toggleTheme() {
+  function toggleTheme() {
     if (
       !ref.current ||
       !document.startViewTransition ||
@@ -50,37 +50,44 @@ export default function ThemeToggle() {
     }
     
     const currentTheme = theme;
-    await document.startViewTransition(() => {
+    document.documentElement.classList.add('circle-transition');
+    
+    const transition = document.startViewTransition(() => {
       flushSync(() => {
         setTheme(theme === "light" ? "dark" : "light")
       })
-    }).ready;
+    })
     
-    const { top, left, width, height } = ref.current.getBoundingClientRect();
-    const x = left + width / 2;
-    const y = top + height / 2;
-    const right = window.innerWidth - left;
-    const bottom = window.innerHeight - top;
-    const maxRadius = Math.hypot(
-      Math.max(left, right),
-      Math.max(top, bottom),
-    );
+    transition.ready.then(() => {
+      if (!ref.current) return;
+      const { top, left, width, height } = ref.current.getBoundingClientRect();
+      const x = left + width / 2;
+      const y = top + height / 2;
+      const right = window.innerWidth - left;
+      const bottom = window.innerHeight - top;
+      const maxRadius = Math.hypot(
+        Math.max(left, right),
+        Math.max(top, bottom),
+      );
 
-    // const clipPath = [`circle(${maxRadius}px at ${x}px ${y}px)`, `circle(0px at ${x}px ${y}px)`]
+      const clipPath = currentTheme === "light" 
+        ? [`circle(${maxRadius}px at ${x}px ${y}px)`, `circle(0px at ${x}px ${y}px)`]
+        : [`circle(0px at ${x}px ${y}px)`, `circle(${maxRadius}px at ${x}px ${y}px)`]
 
-    const clipPath = currentTheme === "light" 
-      ? [`circle(${maxRadius}px at ${x}px ${y}px)`, `circle(0px at ${x}px ${y}px)`]
-      : [`circle(0px at ${x}px ${y}px)`, `circle(${maxRadius}px at ${x}px ${y}px)`]
+      document.documentElement.animate(
+        {
+          clipPath,
+        },
+        {
+          duration: 500,
+          easing: currentTheme === "light" ? 'ease-out' : 'ease-in-out',
+          pseudoElement: currentTheme === "light" ? '::view-transition-old(root)' : '::view-transition-new(root)',
+        }
+      );
+    })
 
-    document.documentElement.animate(
-      {
-        clipPath,
-      },
-      {
-        duration: 500,
-        easing: currentTheme === "light" ? 'ease-out' : 'ease-in-out',
-        pseudoElement: currentTheme === "light" ? '::view-transition-old(root)' : '::view-transition-new(root)',
-      }
-    );
+    transition.finished.then(() => {
+      document.documentElement.classList.remove('circle-transition');
+    })
   }
 }

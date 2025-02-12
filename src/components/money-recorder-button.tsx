@@ -3,7 +3,7 @@ import FluentEmojiChopsticks from "./icon/fluent-emoji-chopsticks";
 import FluentEmojiVideoGame from "./icon/fluent-emoji-video-game";
 import FluentEmojiWomansClothes from "./icon/fluent-emoji-womans-clothes";
 import { Button } from "./ui/button";
-import { useContext, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import CountUp from "react-countup";
 import { RecordContext, TotalConfirmedContext } from "./record-context";
 import FluentEmojiSportUtilityVehicle from "./icon/fluent-emoji-sport-utility-vehicle";
@@ -49,6 +49,7 @@ export default function MoneyRecorderButton({
   const totalConfirmed = useContext(TotalConfirmedContext);
   const [pressTimer, setPressTimer] = useState<NodeJS.Timeout | null>(null);
   const [isPressing, setIsPressing] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
 
   const confirmed = records[category].confirmed.reduce((acc, record) => acc + (record.removed ? 0 : record.amount), 0);
   const ratio = confirmed === 0 ? 0 : (confirmed / totalConfirmed);
@@ -68,7 +69,7 @@ export default function MoneyRecorderButton({
         {ICON[category]}
         <div className="text-3xl leading-9 font-bold flex items-end gap-2" >
           <CountUp end={confirmed} duration={1} />
-          <div className="bg-secondary/50 rounded no-click p-[2px] h-fit w-fit" onClick={() => navigate(`/detail/${category}`)}>
+          <div ref={ref} className="bg-secondary/50 rounded no-click p-[2px] h-fit w-fit" onClick={() => navigate(`/detail/${category}`, ref)}>
             <ChevronsLeftRightEllipsisIcon className="!w-5 !h-5 text-muted-foreground" />
           </div>
         </div>

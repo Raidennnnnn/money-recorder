@@ -1,6 +1,7 @@
 import { StrictMode, Suspense } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
+import './view-transition.css'
 import { HashRouter, Route, Routes } from "react-router";
 import App from './App.tsx'
 import { RecordsProviders } from './components/records-providers.tsx';
