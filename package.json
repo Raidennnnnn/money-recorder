@@ -1,9 +1,9 @@
 {
   "name": "money-recorder",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.0.1",
   "type": "module",
-  "homepage": "https://Raidennnnnn.github.io/money-recorder",
+  "homepage": "https://money.deltadawn.fun",
   "scripts": {
     "dev": "vite --host",
     "build": "tsc -b && vite build",

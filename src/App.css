@@ -1,3 +1,25 @@
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-old(root) {
+  z-index: 1
+}
+
+::view-transition-new(root) {
+  z-index: 9999
+}
+
+.dark::view-transition-old(root) {
+  z-index: 9999
+}
+
+.dark::view-transition-new(root) {
+  z-index: 1
+}
+
 #root {
   padding: 0.75rem;
   height: 100vh;
@@ -13,7 +35,7 @@
 }
 
 .animate-grow {
-  animation: grow 1.5s cubic-bezier(0.42, 0, 0.58, 1) forwards;
+  animation: grow .5s cubic-bezier(0.42, 0, 0.58, 1) forwards;
 }
 
 .transition-width {

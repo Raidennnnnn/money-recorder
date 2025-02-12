@@ -4,6 +4,7 @@ import { Past12MonthRecordsContext } from "./record-context";
 import { Suspense, lazy, useContext } from "react";
 import { Month } from "@/types";
 import BackHomeButton from "./back-home-button";
+import ThemeToggle from "./app-theme-toggle";
 
 const PlaceHolder = lazy(() => import("./place-holder"));
 
@@ -42,7 +43,7 @@ export default function Past12MonthChart() {
 
   return <>
     <div className="flex flex-col h-96 items-center justify-center relative">
-      <Suspense fallback={<div className="w-full h-full bg-gray-100 rounded-lg animate-pulse" />}>
+      <Suspense fallback={<div className="w-full h-full bg-secondary rounded-lg animate-pulse" />}>
         <PlaceHolder />
       </Suspense>
     </div>
@@ -59,6 +60,9 @@ export default function Past12MonthChart() {
         <Bar dataKey="records" fill="var(--color-records)" radius={4} />
       </BarChart>
     </ChartContainer>
-    <BackHomeButton />
+    <div className="fixed bottom-8 right-4 flex gap-2">
+      <ThemeToggle />
+      <BackHomeButton />
+    </div>
   </>;
 }

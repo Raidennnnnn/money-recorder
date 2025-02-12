@@ -5,6 +5,7 @@ import { Category } from "@/types";
 import CategoryDetailList from "./category-detail-list";
 import FluentEmojiDisguisedFace from "./icon/fluent-emoji-disguised-face";
 import BackHomeButton from "./back-home-button";
+import ThemeToggle from "./app-theme-toggle";
 
 export default function CategoryDetail() {
   const { category } = useParams();
@@ -21,7 +22,10 @@ export default function CategoryDetail() {
             <span className="text-muted-foreground">暂无记录</span>
           </div>
       }
-      <BackHomeButton />
+      <div className="fixed bottom-8 right-4 flex gap-2">
+        <ThemeToggle />
+        <BackHomeButton />
+      </div>
     </>
   );
 }

@@ -11,7 +11,7 @@ import FluentEmojiFaceWithThermometer from "./icon/fluent-emoji-face-with-thermo
 import FluentEmojiSoap from "./icon/fluent-emoji-soap";
 import FluentEmojiMoneyWithWings from "./icon/fluent-emoji-money-with-wings";
 import { ArrowUpRightIcon, ChevronsLeftRightEllipsisIcon, EqualIcon } from "lucide-react";
-import { useNavigateWithTransition } from "./use-navi-with-transition";
+import { useNavigateWithTransition } from "../hooks/use-navi-with-transition";
 
 const ICON: Record<Category, React.ReactNode> = {
   [Category.CLOTH]: <FluentEmojiWomansClothes className="!w-11 !h-11" />,
@@ -24,13 +24,13 @@ const ICON: Record<Category, React.ReactNode> = {
 }
 
 const BACKGROUND_COLORS: Record<Category, string> = {
-  [Category.CLOTH]: "bg-pink-200",
-  [Category.EAT]:"bg-rose-200",
-  [Category.ENTERTAINMENT]: "bg-violet-200",
-  [Category.TRANSPORTATION]: "bg-blue-200",
-  [Category.HEALTH]: "bg-yellow-200",
-  [Category.DAILY]: "bg-fuchsia-200",
-  [Category.OTHER]: "bg-green-200",
+  [Category.CLOTH]: "bg-pink-200 dark:bg-pink-800/80",
+  [Category.EAT]:"bg-rose-200 dark:bg-rose-800/80",
+  [Category.ENTERTAINMENT]: "bg-violet-200 dark:bg-violet-800/80",
+  [Category.TRANSPORTATION]: "bg-blue-200 dark:bg-blue-800/80",
+  [Category.HEALTH]: "bg-yellow-200 dark:bg-yellow-800/80",
+  [Category.DAILY]: "bg-fuchsia-200 dark:bg-fuchsia-800/80",
+  [Category.OTHER]: "bg-green-200 dark:bg-green-800/80",
 }
 
 interface MoneyRecorderButtonProps {
@@ -66,11 +66,11 @@ export default function MoneyRecorderButton({
       ></div>
       <div className="relative z-20 flex items-end gap-2">
         {ICON[category]}
-        <div className="text-3xl leading-9 font-bold flex items-end gap-1" onClick={() => navigate(`/detail/${category}`)}>
+        <div className="text-3xl leading-9 font-bold flex items-end gap-1" >
           <CountUp end={confirmed} duration={1} />
-          <Button variant="ghost" size="icon" className="no-click p-[2px] h-fit w-fit">
+          <div className="bg-secondary/50 rounded no-click p-[2px] h-fit w-fit" onClick={() => navigate(`/detail/${category}`)}>
             <ChevronsLeftRightEllipsisIcon className="!w-5 !h-5 text-muted-foreground" />
-          </Button>
+          </div>
         </div>
         {records[category].unconfirmed && (
           <div className="font-bold text-red-600 leading-4">
@@ -106,7 +106,7 @@ export default function MoneyRecorderButton({
     const timer = setTimeout(() => {
       onLongPress(category, Number(records[category].unconfirmed));
       setIsPressing(false);
-    }, 1500); // 长按时间阈值（毫秒）
+    }, 500); // 长按时间阈值（毫秒）
     setPressTimer(timer);
   };
 

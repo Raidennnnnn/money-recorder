@@ -24,7 +24,16 @@ export default function CategoryDetailList({ records, category }: { records: Pay
   return <Accordion type="single" collapsible defaultValue={Object.keys(groupedRecords)[0]}>
     {Object.entries(groupedRecords).map(([date, records]) => (
       <AccordionItem value={date} key={date} >
-        <AccordionTrigger className="bg-white font-bold">{date}</AccordionTrigger>
+        <AccordionTrigger className="bg-background font-bold">
+          <div className="flex gap-2 items-end justify-center">
+            <span className='text-lg leading-none'>
+              {new Date(date).toLocaleDateString(undefined, { day: 'numeric' })}
+            </span>
+            <span className="text-muted-foreground leading-none">
+              {new Date(date).toLocaleDateString(undefined, { weekday: 'long' })}
+            </span>
+          </div>
+        </AccordionTrigger>
         <AccordionContent>
           {records.map((record, index) => (
             <Fragment key={record.timeStamp}>
