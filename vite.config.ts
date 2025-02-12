@@ -2,6 +2,7 @@ import { VitePWA } from 'vite-plugin-pwa';
 import path from "path"
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import compression from 'vite-plugin-compression2'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -34,6 +35,8 @@ export default defineConfig({
       suppressWarnings: true,
       type: 'module',
     },
+  }), compression({
+    threshold: 500 * 1024,
   })],
   resolve: {
     alias: {

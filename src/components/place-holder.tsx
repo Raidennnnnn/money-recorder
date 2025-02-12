@@ -12,7 +12,7 @@ export default function PlaceHolder() {
   const positions = useMemo(() => {
     const generatedPositions: { top: number; left: number }[] = [];
     const centerX = 40; // 中心X坐标
-    const centerY = 50; // 中心Y坐标
+    const centerY = 40; // 中心Y坐标
 
     // 六边形布局
     const layout = [
@@ -47,7 +47,7 @@ export default function PlaceHolder() {
   };
 
   return (
-    <div className="flex flex-col h-96 items-center justify-center relative">
+    <>
       {displayedIcons.map((IconComponent, index) => (
         <IconComponent
           key={index}
@@ -60,6 +60,6 @@ export default function PlaceHolder() {
           onClick={() => handleIconClick(index)}
         />
       ))}
-    </div>
+    </>
   );
 }

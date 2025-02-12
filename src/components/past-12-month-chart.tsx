@@ -1,12 +1,13 @@
 import { Bar, BarChart, XAxis } from "recharts";
 import { ChartContainer, ChartTooltip, ChartTooltipContent, type ChartConfig } from "@/components/ui/chart"
 import { Past12MonthRecordsContext } from "./record-context";
-import { useContext } from "react";
+import { Suspense, lazy, useContext } from "react";
 import { Month } from "@/types";
 import { HomeIcon } from "lucide-react";
 import { Button } from "./ui/button";
 import { useNavigateWithTransition } from "./use-navi-with-transition";
-import PlaceHolder from "./place-holder";
+
+const PlaceHolder = lazy(() => import("./place-holder"));
 
 const chartConfig = {
   records: {
@@ -43,7 +44,11 @@ export default function Past12MonthChart() {
   })();
 
   return <>
-    <PlaceHolder />
+    <div className="flex flex-col h-96 items-center justify-center relative">
+      <Suspense fallback={<div className="w-full h-full bg-gray-100 rounded-lg animate-pulse" />}>
+        <PlaceHolder />
+      </Suspense>
+    </div>
     <ChartContainer config={chartConfig}>
       <BarChart accessibilityLayer data={chartData}>
         <XAxis 
