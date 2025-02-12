@@ -64,7 +64,7 @@ export default function Past12MonthChart() {
     </ChartContainer>
     <Button 
       variant="outline" 
-      className="fixed bottom-4 right-4 px-2.5" 
+      className="fixed bottom-8 right-4 px-2.5" 
       onClick={() => navigate('/')}
     >
       <HomeIcon className="w-4 h-4" />

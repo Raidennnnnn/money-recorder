@@ -8,7 +8,7 @@ export default function App() {
   const navigate = useNavigateWithTransition();
   return <>
     <MoneyRecorder />
-    <Button variant="outline" className="fixed bottom-4 right-4 px-2.5" onClick={() => navigate('/chart')}>
+    <Button variant="outline" className="fixed bottom-8 right-4 px-2.5" onClick={() => navigate('/chart')}>
       <ChartColumnIcon className="w-4 h-4" />
     </Button>
   </>
