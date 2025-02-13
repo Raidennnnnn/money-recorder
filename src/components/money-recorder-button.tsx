@@ -14,13 +14,13 @@ import { ArrowUpRightIcon, ChevronsLeftRightEllipsisIcon, EqualIcon } from "luci
 import { useNavigateWithTransition } from "../hooks/use-navi-with-transition";
 
 const ICON: Record<Category, React.ReactNode> = {
-  [Category.CLOTH]: <FluentEmojiWomansClothes className="!w-11 !h-11" />,
-  [Category.EAT]: <FluentEmojiChopsticks className="!w-11 !h-11" />,
-  [Category.ENTERTAINMENT]: <FluentEmojiVideoGame className="!w-11 !h-11" />,
-  [Category.TRANSPORTATION]: <FluentEmojiSportUtilityVehicle className="!w-11 !h-11" />,
-  [Category.HEALTH]: <FluentEmojiFaceWithThermometer className="!w-11 !h-11" />,
-  [Category.DAILY]: <FluentEmojiSoap className="!w-11 !h-11" />,
-  [Category.OTHER]: <FluentEmojiMoneyWithWings className="!w-11 !h-11" />,
+  [Category.CLOTH]: <FluentEmojiWomansClothes className="w-11! h-11!" />,
+  [Category.EAT]: <FluentEmojiChopsticks className="w-11! h-11!" />,
+  [Category.ENTERTAINMENT]: <FluentEmojiVideoGame className="w-11! h-11!" />,
+  [Category.TRANSPORTATION]: <FluentEmojiSportUtilityVehicle className="w-11! h-11!" />,
+  [Category.HEALTH]: <FluentEmojiFaceWithThermometer className="w-11! h-11!" />,
+  [Category.DAILY]: <FluentEmojiSoap className="w-11! h-11!" />,
+  [Category.OTHER]: <FluentEmojiMoneyWithWings className="w-11! h-11!" />,
 }
 
 const BACKGROUND_COLORS: Record<Category, string> = {
@@ -70,17 +70,17 @@ export default function MoneyRecorderButton({
         <div className="text-3xl leading-9 font-bold flex items-end gap-2" >
           <CountUp end={confirmed} duration={1} />
           <div ref={ref} className="bg-secondary/50 rounded no-click p-[2px] h-fit w-fit" onClick={() => navigate(`/detail/${category}`, ref)}>
-            <ChevronsLeftRightEllipsisIcon className="!w-5 !h-5 text-muted-foreground" />
+            <ChevronsLeftRightEllipsisIcon className="w-5! h-5! text-muted-foreground" />
           </div>
         </div>
         {records[category].unconfirmed && (
           <div className="font-bold text-red-600 leading-4">
             <div className="flex">
-              <ArrowUpRightIcon className="!w-4 !h-4" />
+              <ArrowUpRightIcon className="w-4! h-4!" />
               <CountUp end={Number(records[category].unconfirmed)} duration={0.5} />
             </div>
             <div className="flex">
-              <EqualIcon className="!w-4 !h-4" />
+              <EqualIcon className="w-4! h-4!" />
               <CountUp end={confirmed + Number(records[category].unconfirmed)} duration={0.5} />
             </div>
           </div>
