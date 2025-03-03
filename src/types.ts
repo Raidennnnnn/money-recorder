@@ -1,3 +1,6 @@
+/**
+ * @deprecated
+ */
 export type PaymentRecordDeprecated = {
   confirmed: number;
   unconfirmed: string;
@@ -20,6 +23,19 @@ export enum Category {
   HEALTH,
   DAILY,
   OTHER,
+}
+
+export type PaymentRecordV2 = {
+  confirmed: {
+    timeStamp: number;
+    amount: number;
+    removed: boolean;
+    category: Category
+  }[]
+  unconfirmed: {
+    amount: string;
+    category: Category;
+  } | null
 }
 
 export type Month = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11;

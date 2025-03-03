@@ -5,7 +5,7 @@ import FluentEmojiWomansClothes from "./icon/fluent-emoji-womans-clothes";
 import { Button } from "./ui/button";
 import { useContext, useRef, useState } from "react";
 import CountUp from "react-countup";
-import { RecordContext, TotalConfirmedContext } from "./record-context";
+import { CurrentCycleRecordsContext, TotalConfirmedContext } from "./record-context";
 import FluentEmojiSportUtilityVehicle from "./icon/fluent-emoji-sport-utility-vehicle";
 import FluentEmojiFaceWithThermometer from "./icon/fluent-emoji-face-with-thermometer";
 import FluentEmojiSoap from "./icon/fluent-emoji-soap";
@@ -45,14 +45,17 @@ export default function MoneyRecorderButton({
   onLongPress,
 }: MoneyRecorderButtonProps) {
   const navigate = useNavigateWithTransition();
-  const records = useContext(RecordContext);
+  const records = useContext(CurrentCycleRecordsContext);
   const totalConfirmed = useContext(TotalConfirmedContext);
   const [pressTimer, setPressTimer] = useState<NodeJS.Timeout | null>(null);
   const [isPressing, setIsPressing] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
-  const confirmed = records[category].confirmed.reduce((acc, record) => acc + (record.removed ? 0 : record.amount), 0);
-  const ratio = confirmed === 0 ? 0 : (confirmed / totalConfirmed);
+  const confirmedInThisCycle = records.confirmed.filter(c => c.category === category);
+  const unconfirmed = records.unconfirmed;
+
+  const confirmedTotal = confirmedInThisCycle.reduce((acc, curr) => acc + (curr.removed ? 0 : curr.amount), 0)
+  const ratio = confirmedTotal === 0 ? 0 : (confirmedTotal / totalConfirmed);
 
   return (
     <Button
@@ -68,20 +71,20 @@ export default function MoneyRecorderButton({
       <div className="relative z-20 flex items-end gap-2">
         {ICON[category]}
         <div className="text-3xl leading-9 font-bold flex items-end gap-2" >
-          <CountUp end={confirmed} duration={1} />
+          <CountUp end={confirmedTotal} duration={1} />
           <div ref={ref} className="bg-secondary/50 rounded no-click p-[2px] h-fit w-fit" onClick={() => navigate(`/detail/${category}`, ref)}>
             <ChevronsLeftRightEllipsisIcon className="w-5! h-5! text-muted-foreground" />
           </div>
         </div>
-        {records[category].unconfirmed && (
+        {unconfirmed?.category === category && (
           <div className="font-bold text-red-600 leading-4">
             <div className="flex">
               <ArrowUpRightIcon className="w-4! h-4!" />
-              <CountUp end={Number(records[category].unconfirmed)} duration={0.5} />
+              <CountUp end={Number(unconfirmed.amount)} duration={0.5} />
             </div>
             <div className="flex">
               <EqualIcon className="w-4! h-4!" />
-              <CountUp end={confirmed + Number(records[category].unconfirmed)} duration={0.5} />
+              <CountUp end={confirmedTotal + Number(unconfirmed.amount)} duration={0.5} />
             </div>
           </div>
         )}
@@ -96,8 +99,8 @@ export default function MoneyRecorderButton({
     if ((e.target as HTMLElement).closest('.no-click')) {
       return;
     }
-    
-    if (!records[category].unconfirmed) {
+
+    if (!unconfirmed) {
       onClick(category);
       return;
     }
@@ -105,7 +108,7 @@ export default function MoneyRecorderButton({
     setIsPressing(true);
 
     const timer = setTimeout(() => {
-      onLongPress(category, Number(records[category].unconfirmed));
+      onLongPress(category, Number(unconfirmed.amount));
       setIsPressing(false);
     }, 500); // 长按时间阈值（毫秒）
     setPressTimer(timer);
