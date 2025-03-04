@@ -61,8 +61,6 @@ export default function AppStatisticHeatMap({
   </div>;
 
   function handleCellClick(value: ReactCalendarHeatmapValue<string> | undefined) {
-    if (value) {
-      onCellClick(valuesByDay[value.date]);
-    }
+    onCellClick(value ? valuesByDay[value.date]: []);
   }
 }

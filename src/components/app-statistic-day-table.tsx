@@ -22,7 +22,7 @@ export default function AppStatisticDayTable({ data }: { data: PaymentRecordV2['
     </TableHeader>
     <TableBody>
       { data.map((record) => {
-        return <TableRow key={record.timeStamp}>
+        return <TableRow key={record.timeStamp + record.category}>
           <TableCell>{ new Date(record.timeStamp).toLocaleDateString() }</TableCell>
           <TableCell className={record.removed ? "line-through" : ""}>{ record.amount }</TableCell>
           <TableCell>{ CATEGORY_NAME[record.category] }</TableCell>

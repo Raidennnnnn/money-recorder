@@ -28,7 +28,7 @@ export default function AppStatisticMonthChart({
       />
       <Bar dataKey="records" fill="var(--color-records)" onClick={handleBarClick}>
         <LabelList
-          offset={8}
+          offset={2}
           fontSize={12}
           dataKey="records"
           position="top"

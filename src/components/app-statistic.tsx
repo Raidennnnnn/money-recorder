@@ -9,10 +9,15 @@ export default function AppStatistic() {
   const [data, setData] = useState<PaymentRecordV2['confirmed']>([]);
 
   return <>
-    <AppStatisticMonthChart onBarClick={setIndex} />
+    <AppStatisticMonthChart onBarClick={handleIndexChange} />
     { !isNaN(index) && <AppStatisticHeatMap index={index} onCellClick={setData} /> }
     {data.length > 0 && <AppStatisticDayTable data={data} />}
     <BackHomeButton />
   </>;
+
+  function handleIndexChange(index:number) {
+    setIndex(index);
+    setData([])
+  }
 }
 
