@@ -47,19 +47,19 @@
 //         <PlaceHolder />
 //       </Suspense>
 //     </div>
-//     <ChartContainer config={chartConfig}>
-//       <BarChart accessibilityLayer data={chartData}>
-//         <XAxis 
-//           dataKey="month" 
-//           tickLine={false}
-//           tickMargin={10}
-//           axisLine={false}
-//           tickFormatter={(value: Month) => String(value + 1)} 
-//         />
-//         <ChartTooltip content={<ChartTooltipContent />} />
-//         <Bar dataKey="records" fill="var(--color-records)" radius={4} />
-//       </BarChart>
-//     </ChartContainer>
+    // <ChartContainer config={chartConfig}>
+    //   <BarChart accessibilityLayer data={chartData}>
+    //     <XAxis 
+    //       dataKey="month" 
+    //       tickLine={false}
+    //       tickMargin={10}
+    //       axisLine={false}
+    //       tickFormatter={(value: Month) => String(value + 1)} 
+    //     />
+    //     <ChartTooltip content={<ChartTooltipContent />} />
+    //     <Bar dataKey="records" fill="var(--color-records)" radius={4} />
+    //   </BarChart>
+    // </ChartContainer>
 //     <div className="fixed bottom-8 right-4 flex gap-2">
 //       <ThemeToggle />
 //       <BackHomeButton />

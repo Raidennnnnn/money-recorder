@@ -1,61 +1,70 @@
 import { useEffect, useMemo, useState } from "react";
-import { CurrentCycleRecordsContext, defaultPast12MonthRecordsV2, PaymentRecordsV2Context, SetPaymentRecordsV2Context, TotalConfirmedContext } from "./record-context";
-import { Month, PaymentRecordV2 } from "@/types";
+import { CurrentCycleRecordsContext, defaultPast12MonthRecordsV2, getSlicePoints, PaymentRecordsV2Context, SelectedDayContext, SetPaymentRecordsV2Context, SetSelectedDayContext, TotalConfirmedContext, UnconfirmedRecordsContext, SlicePointsContext, AllPaymentRecordsSplitByCycleContext } from "./app-records-contexts";
+import { PaymentRecordV2 } from "@/types";
 
 export function AppRecordsProviders({children}: {children: React.ReactNode}) {
+  const [selectedDay, setSelectedDay] = useState<string>(localStorage.getItem('selected-day') || '1');
+  const [slicePoints, setSlicePoints] = useState<number[]>(getSlicePoints(selectedDay));
   const [allPaymentRecords, setAllPaymentRecords] = useState<PaymentRecordV2>(defaultPast12MonthRecordsV2);
 
   useEffect(() => {
-    const thisYear = new Date().getFullYear();
-    const thisMonth = new Date().getMonth() as Month;
-    const selectedDay = localStorage.getItem('selected-day') || '1';
-    const slicePoint = new Date(thisYear - 1, thisMonth, Number(selectedDay)).getTime();
+    setSlicePoints(getSlicePoints(selectedDay));
+  }, [selectedDay])
 
+  useEffect(() => {
+    const slicePoint = slicePoints[0];
     setAllPaymentRecords((prev) => {
       return {
         ...prev,
         confirmed: prev.confirmed.filter((record) => record.timeStamp >= slicePoint),
       };
     });
-  }, [])
+  }, [slicePoints])
 
   useEffect(() => {
     localStorage.setItem('allRecords', JSON.stringify(allPaymentRecords));
   }, [allPaymentRecords]);
 
-  const thisCycleStartPoint = getThisCycleStartPoint();
-  const thisCycleRecords: PaymentRecordV2 = useMemo(() => ({
-    confirmed: allPaymentRecords.confirmed.filter((record) => {
-      return record.timeStamp >= thisCycleStartPoint;
-    }),
-    unconfirmed: allPaymentRecords.unconfirmed
-  }), [allPaymentRecords, thisCycleStartPoint]);
+  const allPaymentRecordsSplitByCycle = useMemo(() => {
+    return slicePoints.map((slicePoint, index) => {
+      const nextSlicePoint = index < slicePoints.length - 1 ? slicePoints[index + 1] : Infinity;
+      return allPaymentRecords.confirmed.filter(
+        (record) => record.timeStamp >= slicePoint && record.timeStamp < nextSlicePoint
+      );
+    });
+  }, [allPaymentRecords.confirmed, slicePoints]);
+
+  const thisCycleRecords: PaymentRecordV2['confirmed'] = useMemo(() => 
+    allPaymentRecordsSplitByCycle[11],
+    [allPaymentRecordsSplitByCycle]
+  );
+
+  const unconfirmedRecords = useMemo(() => {
+    return allPaymentRecords.unconfirmed;
+  }, [allPaymentRecords]);
 
   const totalConfirmedInThisCycle = useMemo(() => {
-    return thisCycleRecords.confirmed.reduce((acc, record) => acc + (record.removed ? 0 : record.amount), 0);
+    return thisCycleRecords.reduce((acc, record) => acc + (record.removed ? 0 : record.amount), 0);
   }, [thisCycleRecords]);
 
   return <PaymentRecordsV2Context.Provider value={allPaymentRecords}>
     <SetPaymentRecordsV2Context.Provider value={setAllPaymentRecords}>
-      <CurrentCycleRecordsContext.Provider value={thisCycleRecords}>
-        <TotalConfirmedContext.Provider value={totalConfirmedInThisCycle}>
-          {children}
-        </TotalConfirmedContext.Provider>
-      </CurrentCycleRecordsContext.Provider>
+      <AllPaymentRecordsSplitByCycleContext.Provider value={allPaymentRecordsSplitByCycle}>
+        <CurrentCycleRecordsContext.Provider value={thisCycleRecords}>
+          <SlicePointsContext.Provider value={slicePoints}>
+            <UnconfirmedRecordsContext.Provider value={unconfirmedRecords}>
+              <TotalConfirmedContext.Provider value={totalConfirmedInThisCycle}>
+                <SelectedDayContext.Provider value={selectedDay}>
+                  <SetSelectedDayContext.Provider value={setSelectedDay}>
+                    {children}
+                  </SetSelectedDayContext.Provider>
+                </SelectedDayContext.Provider>
+              </TotalConfirmedContext.Provider>
+            </UnconfirmedRecordsContext.Provider>
+          </SlicePointsContext.Provider>
+        </CurrentCycleRecordsContext.Provider>
+      </AllPaymentRecordsSplitByCycleContext.Provider>
     </SetPaymentRecordsV2Context.Provider>
   </PaymentRecordsV2Context.Provider>
-}
-
-function getThisCycleStartPoint() {
-  const thisYear = new Date().getFullYear();
-  const thisMonth = new Date().getMonth() as Month;
-  const thisDate = new Date().getDate();
-  const selectedDay = localStorage.getItem('selected-day') || '1';
-
-  if (thisDate >= Number(selectedDay)) {
-      return new Date(thisYear, thisMonth, Number(selectedDay)).getTime();
-  }
-
-  return new Date(thisYear, thisMonth - 1, Number(selectedDay)).getTime();
 }
 

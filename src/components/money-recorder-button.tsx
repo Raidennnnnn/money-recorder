@@ -5,7 +5,7 @@ import FluentEmojiWomansClothes from "./icon/fluent-emoji-womans-clothes";
 import { Button } from "./ui/button";
 import { useContext, useRef, useState } from "react";
 import CountUp from "react-countup";
-import { CurrentCycleRecordsContext, TotalConfirmedContext } from "./record-context";
+import { CurrentCycleRecordsContext, TotalConfirmedContext, UnconfirmedRecordsContext } from "./app-records-contexts";
 import FluentEmojiSportUtilityVehicle from "./icon/fluent-emoji-sport-utility-vehicle";
 import FluentEmojiFaceWithThermometer from "./icon/fluent-emoji-face-with-thermometer";
 import FluentEmojiSoap from "./icon/fluent-emoji-soap";
@@ -47,12 +47,13 @@ export default function MoneyRecorderButton({
   const navigate = useNavigateWithTransition();
   const records = useContext(CurrentCycleRecordsContext);
   const totalConfirmed = useContext(TotalConfirmedContext);
+  const unconfirmedRecords = useContext(UnconfirmedRecordsContext);
+
   const [pressTimer, setPressTimer] = useState<NodeJS.Timeout | null>(null);
   const [isPressing, setIsPressing] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
-  const confirmedInThisCycle = records.confirmed.filter(c => c.category === category);
-  const unconfirmed = records.unconfirmed;
+  const confirmedInThisCycle = records.filter(c => c.category === category);
 
   const confirmedTotal = confirmedInThisCycle.reduce((acc, curr) => acc + (curr.removed ? 0 : curr.amount), 0)
   const ratio = confirmedTotal === 0 ? 0 : (confirmedTotal / totalConfirmed);
@@ -76,15 +77,15 @@ export default function MoneyRecorderButton({
             <ChevronsLeftRightEllipsisIcon className="w-5! h-5! text-muted-foreground" />
           </div>
         </div>
-        {unconfirmed?.category === category && (
+        {unconfirmedRecords?.category === category && (
           <div className="font-bold text-red-600 leading-4">
             <div className="flex">
               <ArrowUpRightIcon className="w-4! h-4!" />
-              <CountUp end={Number(unconfirmed.amount)} duration={0.5} />
+              <CountUp end={Number(unconfirmedRecords.amount)} duration={0.5} />
             </div>
             <div className="flex">
               <EqualIcon className="w-4! h-4!" />
-              <CountUp end={confirmedTotal + Number(unconfirmed.amount)} duration={0.5} />
+              <CountUp end={confirmedTotal + Number(unconfirmedRecords.amount)} duration={0.5} />
             </div>
           </div>
         )}
@@ -100,7 +101,7 @@ export default function MoneyRecorderButton({
       return;
     }
 
-    if (!unconfirmed) {
+    if (!unconfirmedRecords) {
       onClick(category);
       return;
     }
@@ -108,7 +109,7 @@ export default function MoneyRecorderButton({
     setIsPressing(true);
 
     const timer = setTimeout(() => {
-      onLongPress(category, Number(unconfirmed.amount));
+      onLongPress(category, Number(unconfirmedRecords.amount));
       setIsPressing(false);
     }, 500); // 长按时间阈值（毫秒）
     setPressTimer(timer);

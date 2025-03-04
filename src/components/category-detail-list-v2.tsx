@@ -1,7 +1,7 @@
 import { Fragment, useContext, useMemo } from 'react';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from './ui/accordion';
 import { PaymentRecordV2 } from '../types';
-import { SetPaymentRecordsV2Context } from './record-context';
+import { SetPaymentRecordsV2Context } from './app-records-contexts';
 import { Separator } from '@radix-ui/react-separator';
 import { Undo2, XIcon } from 'lucide-react';
 

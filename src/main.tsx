@@ -4,36 +4,33 @@ import './index.css'
 import './view-transition.css'
 import { HashRouter, Route, Routes } from "react-router";
 import App from './App.tsx'
-// import { RecordsProviders } from './components/records-providers.tsx';
 import React from 'react';
 import NotFoundPage from './components/not-found-page.tsx';
-import { ThemeProvider } from './components/app-theme-provider.tsx';
+import ThemeProviderV2 from './components/app-theme-provider-v2.tsx';
 import AppSettings from './components/app-settings.tsx';
 import { AppRecordsProviders } from './components/app-records-providers.tsx';
 
 // 使用 React.lazy 动态导入组件
 const CategoryDetail = React.lazy(() => import('./components/category-detail.tsx'));
-const Past12MonthChartV2 = React.lazy(() => import('./components/past-12-month-chart-v2.tsx'));
+const AppStatistic = React.lazy(() => import('./components/app-statistic.tsx'));
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <ThemeProvider>
+    <ThemeProviderV2 defaultTheme="system" storageKey="vite-ui-theme">
       <AppRecordsProviders>
-        {/* <RecordsProviders> */}
-          <HashRouter>
-            <Suspense fallback={<div className="h-screen flex items-center justify-center">Loading...</div>}>
+        <HashRouter>
+          <Suspense fallback={<div className="h-screen flex items-center justify-center">Loading...</div>}>
             <Routes>
               <Route path="/" element={<App />} />
               <Route path="detail/:category" element={<CategoryDetail />} />
-              <Route path="chart" element={<Past12MonthChartV2 />} />
+              <Route path="statistic" element={<AppStatistic />} />
               <Route path="settings" element={<AppSettings />} />
               <Route path="*" element={<NotFoundPage />} />
             </Routes>
           </Suspense>
         </HashRouter>
-      {/* </RecordsProviders> */}
       </AppRecordsProviders>
-    </ThemeProvider>
+    </ThemeProviderV2>
   </StrictMode>,
 )
 

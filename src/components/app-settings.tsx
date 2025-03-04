@@ -1,15 +1,21 @@
-import AppSubpageCornerButtons from "./app-subpage-corner-buttons";
-import { Label } from "./ui/label";
-import { RadioGroup } from "./ui/radio-group";
-import { RadioGroupItem } from "./ui/radio-group";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
+import { SelectedDayContext, SetSelectedDayContext } from "./app-records-contexts";
+import { useContext } from "react";
+import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
+import { Label } from "./ui/label";
+import { Sun, Moon, Monitor } from "lucide-react";
+import { useTheme } from "@/hooks/use-theme";
+import { flushSync } from "react-dom";
+import BackHomeButton from "./back-home-button";
 
 export default function AppSettings() {
-  const selectedDay = localStorage.getItem('selected-day') || '1';
+  const { setTheme } = useTheme();
+  const selectedDay = useContext(SelectedDayContext);
+  const setSelectedDay = useContext(SetSelectedDayContext);
 
   return <div className="p-4 flex flex-col gap-4">
     <h1 className="font-bold text-2xl">设置</h1>
-    <label htmlFor="day">选择每月：</label>
+    <label htmlFor="day">选择记账周期起始日：</label>
     <Select defaultValue={selectedDay} onValueChange={handleStartDayChange}>
       <SelectTrigger>
         <SelectValue placeholder="日期" />
@@ -22,29 +28,49 @@ export default function AppSettings() {
         </SelectGroup>
       </SelectContent>
     </Select>
-    <div className="flex items-center gap-2">
+    <div className="flex items-center">
       <label htmlFor="day-type" className="mr-4">作为：</label>
-      <RadioGroup defaultValue="start" onValueChange={handleDayTypeChange} className="flex p-1 rounded-lg w-fit border border-input">
+      <RadioGroup defaultValue="system" onValueChange={handleThemeChange} className="flex p-1 rounded-lg w-fit border border-input">
         <div className="flex items-center">
-        <RadioGroupItem value="start" id="start" className="peer sr-only" />
-        <Label htmlFor="start" className="px-4 py-2 rounded-md peer-data-[state=checked]:bg-accent cursor-pointer">开始</Label>
-      </div>
-      <div className="flex items-center">
-        <RadioGroupItem value="end" id="end" className="peer sr-only" />
-        <Label htmlFor="end" className="px-4 py-2 rounded-md peer-data-[state=checked]:bg-accent cursor-pointer">结束</Label>
+          <RadioGroupItem value="light" id="light" className="peer sr-only" />
+          <Label htmlFor="light" className="px-2.5 py-2 rounded-md peer-data-[state=checked]:bg-accent cursor-pointer">
+            <Sun className="w-4 h-4" />
+          </Label>
+        </div>
+        <div className="flex items-center">
+          <RadioGroupItem value="dark" id="dark" className="peer sr-only" />
+          <Label htmlFor="dark" className="px-2 py-2 rounded-md peer-data-[state=checked]:bg-accent cursor-pointer">
+            <Moon className="w-4 h-4" />
+          </Label>
+        </div>
+        <div className="flex items-center">
+          <RadioGroupItem value="system" id="system" className="peer sr-only" />
+          <Label htmlFor="system" className="px-2 py-2 rounded-md peer-data-[state=checked]:bg-accent cursor-pointer">
+            <Monitor className="w-4 h-4" />
+          </Label>
         </div>
       </RadioGroup>
     </div>
-    <AppSubpageCornerButtons />
+    <BackHomeButton />
   </div>;
 
   function handleStartDayChange(value: string) {
+    setSelectedDay(value);
     localStorage.setItem("selected-day", value);
   }
 
-  function handleDayTypeChange(value: string) {
-    localStorage.setItem("day-type", value);
+  function handleThemeChange(value: string) {
+    if (
+      !document.startViewTransition ||
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    ) {
+      setTheme(value as 'light' | 'dark' | 'system')
+      return
+    }
+    document.startViewTransition(() => {
+      flushSync(() => {
+        setTheme(value as 'light' | 'dark' | 'system')
+      })
+    })
   }
 }
-
-

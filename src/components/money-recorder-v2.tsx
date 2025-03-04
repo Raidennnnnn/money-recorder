@@ -2,11 +2,13 @@ import { useContext, useState } from 'react';
 import { Input } from './ui/input';
 import MoneyRecorderButton from './money-recorder-button';
 import { Category } from '../types';
-import { PaymentRecordsV2Context, SetPaymentRecordsV2Context, TotalConfirmedContext } from './record-context';
+import { PaymentRecordsV2Context, SetPaymentRecordsV2Context, TotalConfirmedContext } from './app-records-contexts';
+import { SlicePointsContext } from './app-records-contexts';
 
 const categorys = Object.values(Category).filter((c): c is Category => !isNaN(Number(c)));
 
 export default function MoneyRecorderV2() {
+  const slicePoints = useContext(SlicePointsContext);
   const allPaymentRecords = useContext(PaymentRecordsV2Context);
   const totalConfirmed = useContext(TotalConfirmedContext);
   const setAllPaymentRecords = useContext(SetPaymentRecordsV2Context);
@@ -33,9 +35,12 @@ export default function MoneyRecorderV2() {
         ))
       }
     </div>}
-    <div>
-      <span className="text-lg font-bold">总计：</span>
-      <span className="text-lg font-bold">{totalConfirmed}</span>
+    <div className="text-muted-foreground text-xs leading-none">
+      {new Date(slicePoints[11]).toLocaleDateString() + ' - 至今'}
+    </div>
+    <div className="text-lg font-bold leading-none">
+      <span>总计：</span>
+      <span>{totalConfirmed}</span>
     </div>
   </div>
 
