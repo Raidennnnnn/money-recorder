@@ -13,7 +13,7 @@ export default function AppStatistic() {
     <AppStatisticMonthChart onBarClick={handleIndexChange} />
     { !isNaN(index) && <AppStatisticHeatMap index={index} onCellClick={setData} /> }
     {data.length > 0 && <AppStatisticDayTable data={data} />}
-    <div className="fixed bottom-8 right-4 flex gap-2">
+    <div className="fixed bottom-8 right-4 flex gap-2 float-button-container">
       <AppSettings />
       <BackHomeButton />
     </div>

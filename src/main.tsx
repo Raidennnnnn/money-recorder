@@ -4,7 +4,7 @@ import { HashRouter, Route, Routes } from "react-router";
 import App from './App.tsx'
 import React from 'react';
 import NotFoundPage from './components/not-found-page.tsx';
-import ThemeProviderV2 from './components/app-theme-provider-v2.tsx';
+import ThemeProviderV2 from './components/app-theme-provider.tsx';
 import { AppRecordsProviders } from './components/app-records-providers.tsx';
 
 import './index.css'

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import MoneyRecorderButton from './money-recorder-button';
 import { Category } from '../types';
 import MoneyRecorderFooter from './money-recorder-footer';
-import CategoryDetail from './category-detail-v2';
+import CategoryDetail from './category-detail';
 
 const categorys = Object.values(Category).filter((c): c is Category => !isNaN(Number(c)));
 

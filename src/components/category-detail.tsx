@@ -1,9 +1,9 @@
 import { useContext } from "react";
 import { useMemo } from "react";
-import { Drawer, DrawerContent } from "../components/ui/drawer";
+import { Drawer, DrawerContent } from "./ui/drawer";
 import { CurrentCycleRecordsContext } from "./app-records-contexts";
 import { Category } from "@/types";
-import CategoryDetailListV2 from "./category-detail-list-v2";
+import CategoryDetailListV2 from "./category-detail-list";
 import { FluentEmojiDisguisedFace } from "./icon";
 
 export default function CategoryDetail({
