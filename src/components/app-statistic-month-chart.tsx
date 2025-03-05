@@ -21,7 +21,7 @@ export default function AppStatisticMonthChart({
   const chartData = getChartData(slicePoints, recordsSplitByCycle);
   
   return <ChartContainer config={chartConfig}>
-    <BarChart accessibilityLayer data={chartData}>
+    <BarChart accessibilityLayer data={chartData} margin={{ top: 20 }}>
       <XAxis 
         dataKey="cycle" 
         fontSize={10}
