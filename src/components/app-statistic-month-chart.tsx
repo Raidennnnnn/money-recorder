@@ -7,7 +7,7 @@ import { ConfirmedPaymentRecord } from "@/types";
 const chartConfig = {
   records: {
     label: "支出",
-    color: "#2563eb",
+    color: "oklch(0.645 0.246 16.439)",
   },
 } satisfies ChartConfig
 
@@ -28,7 +28,7 @@ export default function AppStatisticMonthChart({
       />
       <Bar dataKey="records" fill="var(--color-records)" onClick={handleBarClick}>
         <LabelList
-          offset={2}
+          offset={8}
           fontSize={12}
           dataKey="records"
           position="top"

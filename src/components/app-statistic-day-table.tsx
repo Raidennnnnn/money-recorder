@@ -1,15 +1,6 @@
 import { TableHeader, TableRow, TableHead, TableBody, TableCell, Table } from "./ui/table"
-import { Category, ConfirmedPaymentRecord } from "@/types"
-
-const CATEGORY_NAME = {
-  [Category.EAT]: "餐饮",
-  [Category.TRANSPORTATION]: "交通",
-  [Category.ENTERTAINMENT]: "娱乐",
-  [Category.HEALTH]: "健康",
-  [Category.DAILY]: "日用品",
-  [Category.CLOTH]: "服饰",
-  [Category.OTHER]: "其他"
-} as const;
+import { ConfirmedPaymentRecord } from "@/types"
+import { CATEGORY_NAME } from "@/lib/category-related"
 
 export default function AppStatisticDayTable({ data }: { data: ConfirmedPaymentRecord[] }) {
   return <Table>
@@ -21,13 +12,21 @@ export default function AppStatisticDayTable({ data }: { data: ConfirmedPaymentR
       </TableRow>
     </TableHeader>
     <TableBody>
-      { data.map((record) => {
-        return <TableRow key={record.timeStamp + record.category}>
-          <TableCell>{ new Date(record.timeStamp).toLocaleDateString() }</TableCell>
-          <TableCell className={record.removed ? "line-through" : ""}>{ record.amount }</TableCell>
-          <TableCell>{ CATEGORY_NAME[record.category] }</TableCell>
-        </TableRow>
-      }) }
+      { 
+        data.map((record) => {
+          return <TableRow key={record.timeStamp + record.category}>
+            <TableCell>
+              { new Date(record.timeStamp).toLocaleString(undefined, { dateStyle: 'short', timeStyle: 'short' }) }
+            </TableCell>
+            <TableCell className={record.removed ? "line-through" : ""}>
+              { record.amount }
+            </TableCell>
+            <TableCell>
+              { CATEGORY_NAME[record.category] }
+            </TableCell>
+          </TableRow>
+        }) 
+      }
     </TableBody>
   </Table>
   

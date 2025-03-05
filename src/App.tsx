@@ -8,6 +8,7 @@ import MoneyRecorderV2 from './components/money-recorder-v2';
 export default function App() {
   const navigate = useNavigateWithTransition();
   const ref = useRef<HTMLButtonElement>(null);
+  
   return <>
     <MoneyRecorderV2 />
     <div className="fixed bottom-8 right-4 flex gap-2">

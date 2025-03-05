@@ -15,7 +15,7 @@ export default function AppSettings() {
 
   return <div className="p-4 flex flex-col gap-4">
     <h1 className="font-bold text-2xl">设置</h1>
-    <label htmlFor="day">选择记账周期起始日：</label>
+    <label htmlFor="day">选择记账周期起始日</label>
     <Select defaultValue={selectedDay} onValueChange={handleStartDayChange}>
       <SelectTrigger>
         <SelectValue placeholder="日期" />
@@ -29,7 +29,7 @@ export default function AppSettings() {
       </SelectContent>
     </Select>
     <div className="flex items-center">
-      <label htmlFor="day-type" className="mr-4">作为：</label>
+      <label htmlFor="day-type" className="mr-4">主题</label>
       <RadioGroup defaultValue={theme} onValueChange={handleThemeChange} className="flex p-1 rounded-lg w-fit border border-input">
         <div className="flex items-center">
           <RadioGroupItem value="light" id="light" className="peer sr-only" />

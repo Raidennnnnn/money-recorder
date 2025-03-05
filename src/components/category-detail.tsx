@@ -9,6 +9,7 @@ import BackHomeButton from "./back-home-button";
 export default function CategoryDetail() {
   const { category } = useParams();
   const currentCycleRecords = useContext(CurrentCycleRecordsContext);
+  
   const records = useMemo(
     () => currentCycleRecords.filter(record => record.category === Number(category) as Category), 
     [currentCycleRecords, category]

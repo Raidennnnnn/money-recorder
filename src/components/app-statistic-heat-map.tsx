@@ -4,6 +4,8 @@ import CalendarHeatmap, { ReactCalendarHeatmapValue } from "react-calendar-heatm
 import { SlicePointsContext } from "./app-records-contexts";
 import { ConfirmedPaymentRecord } from "@/types";
 
+const weekdays = ['日', '一', '二', '三', '四', '五', '六'];
+
 export default function AppStatisticHeatMap({
   index,
   onCellClick,
@@ -39,8 +41,11 @@ export default function AppStatisticHeatMap({
   }, [valuesByDay]);
 
   return <div className="w-full p-2">
-    <div className="font-bold text-lg">
+    <div className="text-sm text-muted-foreground">
       { startDate.toLocaleDateString() } - { endDate.toLocaleDateString() }
+    </div>
+    <div className="flex flex-row justify-between my-2">
+      { weekdays.map((weekday) => <div className="w-9 text-center font-bold">{ weekday }</div> ) }
     </div>
     <CalendarHeatmap
       showMonthLabels={false}

@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { CurrentCycleRecordsContext, SelectedDayContext, SetSelectedDayContext, TotalConfirmedContext, UnconfirmedRecordsContext, SlicePointsContext, Past12CyclesRecords, SetPast12CyclesRecords, RecordsSplitByCycleContext, getPaymentRecordsV3, SetUnconfirmedRecordsContext } from "./app-records-contexts";
+import { CurrentCycleRecordsContext, SelectedDayContext, SetSelectedDayContext, TotalConfirmedContext, UnconfirmedRecordsContext, SlicePointsContext, SetPast12CyclesRecords, RecordsSplitByCycleContext, getPaymentRecordsV3, SetUnconfirmedRecordsContext } from "./app-records-contexts";
 import { ConfirmedPaymentRecord } from "@/types";
 import { getSlicePoints } from "@/lib/get-slice-points";
 
@@ -48,26 +48,24 @@ export function AppRecordsProviders({children}: {children: React.ReactNode}) {
     return thisCycleRecords.reduce((acc, record) => acc + (record.removed ? 0 : record.amount), 0);
   }, [thisCycleRecords]);
 
-  return <Past12CyclesRecords.Provider value={confirmedPaymentRecords}>
-    <SetPast12CyclesRecords.Provider value={setConfirmedPaymentRecords}>
-      <UnconfirmedRecordsContext.Provider value={unconfirmedPaymentRecord}>
-        <SetUnconfirmedRecordsContext.Provider value={setUnConfirmedPaymentRecord}>
-          <RecordsSplitByCycleContext.Provider value={allPaymentRecordsSplitByCycle}>
-            <CurrentCycleRecordsContext.Provider value={thisCycleRecords}>
-              <SlicePointsContext.Provider value={slicePoints}>
-              <TotalConfirmedContext.Provider value={totalConfirmedInThisCycle}>
-                <SelectedDayContext.Provider value={selectedDay}>
-                  <SetSelectedDayContext.Provider value={setSelectedDay}>
-                    {children}
-                  </SetSelectedDayContext.Provider>
-                </SelectedDayContext.Provider>
-                </TotalConfirmedContext.Provider>
-              </SlicePointsContext.Provider>
-            </CurrentCycleRecordsContext.Provider>
-          </RecordsSplitByCycleContext.Provider>
-        </SetUnconfirmedRecordsContext.Provider>
-      </UnconfirmedRecordsContext.Provider>
-    </SetPast12CyclesRecords.Provider>
-  </Past12CyclesRecords.Provider>
+  return <SetPast12CyclesRecords.Provider value={setConfirmedPaymentRecords}>
+    <UnconfirmedRecordsContext.Provider value={unconfirmedPaymentRecord}>
+      <SetUnconfirmedRecordsContext.Provider value={setUnConfirmedPaymentRecord}>
+        <RecordsSplitByCycleContext.Provider value={allPaymentRecordsSplitByCycle}>
+          <CurrentCycleRecordsContext.Provider value={thisCycleRecords}>
+            <SlicePointsContext.Provider value={slicePoints}>
+            <TotalConfirmedContext.Provider value={totalConfirmedInThisCycle}>
+              <SelectedDayContext.Provider value={selectedDay}>
+                <SetSelectedDayContext.Provider value={setSelectedDay}>
+                  {children}
+                </SetSelectedDayContext.Provider>
+              </SelectedDayContext.Provider>
+              </TotalConfirmedContext.Provider>
+            </SlicePointsContext.Provider>
+          </CurrentCycleRecordsContext.Provider>
+        </RecordsSplitByCycleContext.Provider>
+      </SetUnconfirmedRecordsContext.Provider>
+    </UnconfirmedRecordsContext.Provider>
+  </SetPast12CyclesRecords.Provider>;
 }
 
