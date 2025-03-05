@@ -1,31 +1,28 @@
 import { Category } from "@/types";
 import { Button } from "./ui/button";
-import { useContext, useRef, useState } from "react";
+import { useContext, useState } from "react";
 import CountUp from "react-countup";
-import { CurrentCycleRecordsContext, TotalConfirmedContext, UnconfirmedRecordsContext } from "./app-records-contexts";
+import { CurrentCycleRecordsContext, SetPast12CyclesRecords, SetUnconfirmedRecordsContext, TotalConfirmedContext, UnconfirmedRecordsContext } from "./app-records-contexts";
 import { ArrowUpRightIcon, ChevronsLeftRightEllipsisIcon, EqualIcon } from "lucide-react";
-import { useNavigateWithTransition } from "../hooks/use-navi-with-transition";
 import { BACKGROUND_COLORS, ICON } from "@/lib/category-related";
 
 interface MoneyRecorderButtonProps {
   category: Category;
-  onClick: (category: Category) => void;
-  onLongPress: (category: Category, amount: number) => void;
+  onOpenDetail: (category: Category) => void;
 }
 
 export default function MoneyRecorderButton({
   category,
-  onClick,
-  onLongPress,
+  onOpenDetail
 }: MoneyRecorderButtonProps) {
-  const navigate = useNavigateWithTransition();
   const records = useContext(CurrentCycleRecordsContext);
   const totalConfirmed = useContext(TotalConfirmedContext);
   const unconfirmedRecords = useContext(UnconfirmedRecordsContext);
+  const setPast12CyclesRecord = useContext(SetPast12CyclesRecords);
+  const setUnconfirmedRecords = useContext(SetUnconfirmedRecordsContext);
 
   const [pressTimer, setPressTimer] = useState<NodeJS.Timeout | null>(null);
   const [isPressing, setIsPressing] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
 
   const confirmedInThisCycle = records.filter(c => c.category === category);
 
@@ -46,7 +43,7 @@ export default function MoneyRecorderButton({
       {ICON[category]}
       <div className="text-3xl leading-9 font-bold flex items-end gap-2" >
         <CountUp end={confirmedTotal} duration={1} />
-        <div ref={ref} className="bg-secondary/50 rounded no-click p-[2px] h-fit w-fit" onClick={() => navigate(`/detail/${category}`, ref)}>
+        <div className="bg-secondary/50 rounded no-click p-[2px] h-fit w-fit" onClick={() => onOpenDetail(category)}>
           <ChevronsLeftRightEllipsisIcon className="w-5! h-5! text-muted-foreground" />
         </div>
       </div>
@@ -80,14 +77,14 @@ export default function MoneyRecorderButton({
       unconfirmedRecords.amount !== '' &&
       unconfirmedRecords.category !== category
     ) {
-      onClick(category);
+      setUnConfirmedRecord(category);
       return;
     }
 
     setIsPressing(true);
 
     const timer = setTimeout(() => {
-      onLongPress(category, Number(unconfirmedRecords.amount));
+      handleAddRecord(category, Number(unconfirmedRecords.amount));
       setIsPressing(false);
     }, 500); // 长按时间阈值（毫秒）
     setPressTimer(timer);
@@ -100,4 +97,18 @@ export default function MoneyRecorderButton({
       setIsPressing(false);
     }
   };
+
+  function setUnConfirmedRecord(category: Category) {
+    setUnconfirmedRecords(prev => ({...prev, category}));
+  }
+
+  function handleAddRecord(category: Category, amount: number) {
+    setUnconfirmedRecords({ amount: '', category: null });
+    setPast12CyclesRecord(prev => [...prev, {
+      timeStamp: new Date().getTime(),
+      amount: Number(amount),
+      category,
+      removed: false,
+    }]);
+  }
 }

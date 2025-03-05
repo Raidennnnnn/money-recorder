@@ -19,7 +19,7 @@ export default function CategoryDetailListV2({ records }: { records: ConfirmedPa
     }, {} as Record<string, typeof records>);
   }, [records]);
 
-  return <Accordion type="single" collapsible defaultValue={Object.keys(groupedRecords)[0]}>
+  return <Accordion type="single" collapsible defaultValue={Object.keys(groupedRecords)[0]} className="m-4">
     {
       Object.entries(groupedRecords).map(([date, records]) => <AccordionItem value={date} key={date} >
         <AccordionTrigger className="bg-background font-bold">
