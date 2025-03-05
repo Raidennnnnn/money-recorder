@@ -1,5 +1,5 @@
 import { TableHeader, TableRow, TableHead, TableBody, TableCell, Table } from "./ui/table"
-import { Category, PaymentRecordV2 } from "@/types"
+import { Category, ConfirmedPaymentRecord } from "@/types"
 
 const CATEGORY_NAME = {
   [Category.EAT]: "餐饮",
@@ -11,7 +11,7 @@ const CATEGORY_NAME = {
   [Category.OTHER]: "其他"
 } as const;
 
-export default function AppStatisticDayTable({ data }: { data: PaymentRecordV2['confirmed'] }) {
+export default function AppStatisticDayTable({ data }: { data: ConfirmedPaymentRecord[] }) {
   return <Table>
     <TableHeader>
       <TableRow>

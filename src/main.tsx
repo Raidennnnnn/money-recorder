@@ -1,7 +1,5 @@
 import { StrictMode, Suspense } from 'react'
 import { createRoot } from 'react-dom/client'
-import './index.css'
-import './view-transition.css'
 import { HashRouter, Route, Routes } from "react-router";
 import App from './App.tsx'
 import React from 'react';
@@ -10,14 +8,17 @@ import ThemeProviderV2 from './components/app-theme-provider-v2.tsx';
 import AppSettings from './components/app-settings.tsx';
 import { AppRecordsProviders } from './components/app-records-providers.tsx';
 
+import './index.css'
+import './view-transition.css'
+
 // 使用 React.lazy 动态导入组件
 const CategoryDetail = React.lazy(() => import('./components/category-detail.tsx'));
 const AppStatistic = React.lazy(() => import('./components/app-statistic.tsx'));
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <ThemeProviderV2 defaultTheme="system" storageKey="vite-ui-theme">
-      <AppRecordsProviders>
+    <AppRecordsProviders>
+      <ThemeProviderV2 defaultTheme="system" storageKey="vite-ui-theme">
         <HashRouter>
           <Suspense fallback={<div className="h-screen flex items-center justify-center">Loading...</div>}>
             <Routes>
@@ -29,8 +30,8 @@ createRoot(document.getElementById('root')!).render(
             </Routes>
           </Suspense>
         </HashRouter>
-      </AppRecordsProviders>
-    </ThemeProviderV2>
+      </ThemeProviderV2>
+    </AppRecordsProviders>
   </StrictMode>,
 )
 

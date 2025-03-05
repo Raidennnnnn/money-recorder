@@ -1,12 +1,12 @@
 import { Fragment, useContext, useMemo } from 'react';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from './ui/accordion';
-import { PaymentRecordV2 } from '../types';
-import { SetPaymentRecordsV2Context } from './app-records-contexts';
+import { ConfirmedPaymentRecord } from '../types';
+import { SetPast12CyclesRecords } from './app-records-contexts';
 import { Separator } from '@radix-ui/react-separator';
 import { Undo2, XIcon } from 'lucide-react';
 
-export default function CategoryDetailListV2({ records }: { records: PaymentRecordV2['confirmed'] }) {
-  const setPaymentRecords = useContext(SetPaymentRecordsV2Context);
+export default function CategoryDetailListV2({ records }: { records: ConfirmedPaymentRecord[] }) {
+  const setPast12CyclesRecords = useContext(SetPast12CyclesRecords);
   
   const groupedRecords = useMemo(() => {
     // 按时间戳倒序排列记录
@@ -57,13 +57,10 @@ export default function CategoryDetailListV2({ records }: { records: PaymentReco
 
   // 删除记录的函数
   function deleteRecord(timeStamp: number) {
-    setPaymentRecords((prev) => {
-      return {
-        ...prev,
-        confirmed: prev.confirmed.map(record => record.timeStamp === timeStamp 
-          ? { ...record, removed: !record.removed } 
-          : record)
-      };
+    setPast12CyclesRecords((prev) => {
+      return prev.map(record => record.timeStamp === timeStamp 
+        ? { ...record, removed: !record.removed } 
+        : record)
     });
-  };
+  }
 }

@@ -9,7 +9,7 @@ import { flushSync } from "react-dom";
 import BackHomeButton from "./back-home-button";
 
 export default function AppSettings() {
-  const { setTheme } = useTheme();
+  const { theme, setTheme } = useTheme();
   const selectedDay = useContext(SelectedDayContext);
   const setSelectedDay = useContext(SetSelectedDayContext);
 
@@ -30,7 +30,7 @@ export default function AppSettings() {
     </Select>
     <div className="flex items-center">
       <label htmlFor="day-type" className="mr-4">作为：</label>
-      <RadioGroup defaultValue="system" onValueChange={handleThemeChange} className="flex p-1 rounded-lg w-fit border border-input">
+      <RadioGroup defaultValue={theme} onValueChange={handleThemeChange} className="flex p-1 rounded-lg w-fit border border-input">
         <div className="flex items-center">
           <RadioGroupItem value="light" id="light" className="peer sr-only" />
           <Label htmlFor="light" className="px-2.5 py-2 rounded-md peer-data-[state=checked]:bg-accent cursor-pointer">

@@ -2,16 +2,17 @@ import { useContext, useState } from 'react';
 import { Input } from './ui/input';
 import MoneyRecorderButton from './money-recorder-button';
 import { Category } from '../types';
-import { PaymentRecordsV2Context, SetPaymentRecordsV2Context, TotalConfirmedContext } from './app-records-contexts';
+import { Past12CyclesRecords, SetPast12CyclesRecords, SetUnconfirmedRecordsContext, TotalConfirmedContext } from './app-records-contexts';
 import { SlicePointsContext } from './app-records-contexts';
 
 const categorys = Object.values(Category).filter((c): c is Category => !isNaN(Number(c)));
 
 export default function MoneyRecorderV2() {
   const slicePoints = useContext(SlicePointsContext);
-  const allPaymentRecords = useContext(PaymentRecordsV2Context);
+  const past12CyclesRecord = useContext(Past12CyclesRecords);
   const totalConfirmed = useContext(TotalConfirmedContext);
-  const setAllPaymentRecords = useContext(SetPaymentRecordsV2Context);
+  const setPast12CyclesRecord = useContext(SetPast12CyclesRecords);
+  const setUnconfirmedRecords = useContext(SetUnconfirmedRecordsContext);
 
   const [amount, setAmount] = useState<string>('');
   const [unConfirmedLocation, setUnConfirmedLocation] = useState<Category | null>(null);
@@ -23,7 +24,7 @@ export default function MoneyRecorderV2() {
       placeholder="金额"
       onChange={handleInputChange}
     />
-    { allPaymentRecords.confirmed.length > 0 && <div className="flex flex-col gap-2">
+    { past12CyclesRecord.length > 0 && <div className="flex flex-col gap-2">
       {
         categorys.map((category) => (
           <MoneyRecorderButton
@@ -49,14 +50,9 @@ export default function MoneyRecorderV2() {
     if (Number(amount) >= 0) {
       setAmount(amount);
       if (unConfirmedLocation) {
-        setAllPaymentRecords((prev) => {
-          return {
-            ...prev,
-            unconfirmed: {
-              amount,
-              category: unConfirmedLocation,
-            },
-          };
+        setUnconfirmedRecords({
+          amount,
+          category: unConfirmedLocation,
         });
       }
     }
@@ -68,24 +64,18 @@ export default function MoneyRecorderV2() {
     }
 
     setUnConfirmedLocation(category);
-    setAllPaymentRecords((prev) => {
-      return {
-        ...prev,
-        unconfirmed: { amount, category },
-      };
-    });
+    setUnconfirmedRecords({ amount, category });
   }
 
   function handleAddRecord(category: Category, amount: number) {
-    setAllPaymentRecords(prev => ({
-      unconfirmed: null,
-      confirmed: [...prev.confirmed, {
-        timeStamp: new Date().getTime(),
-        amount: Number(amount),
-        category,
-        removed: false,
-      }]
-    }))
+    setUnconfirmedRecords(null);
+    setPast12CyclesRecord(prev => [...prev, {
+      timeStamp: new Date().getTime(),
+      amount: Number(amount),
+      category,
+      removed: false,
+    }]);
+    
 
     setAmount('');
     setUnConfirmedLocation(null);

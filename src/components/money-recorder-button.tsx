@@ -101,7 +101,10 @@ export default function MoneyRecorderButton({
       return;
     }
 
-    if (!unconfirmedRecords) {
+    if (
+      !unconfirmedRecords ||
+      unconfirmedRecords.category !== category
+    ) {
       onClick(category);
       return;
     }

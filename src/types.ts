@@ -6,7 +6,10 @@ export type PaymentRecordDeprecated = {
   unconfirmed: string;
 }
 
-export type PaymentRecord = {
+/**
+ * @deprecated
+ */
+export type PaymentRecordV2Deprecated = {
   confirmed: {
     timeStamp: number;
     amount: number;
@@ -25,7 +28,10 @@ export enum Category {
   OTHER,
 }
 
-export type PaymentRecordV2 = {
+/**
+ * @deprecated
+ */
+export type PaymentRecordV3 = {
   confirmed: {
     timeStamp: number;
     amount: number;
@@ -38,10 +44,22 @@ export type PaymentRecordV2 = {
   } | null
 }
 
-export type Month = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11;
+export type ConfirmedPaymentRecord = {
+  timeStamp: number;
+  amount: number;
+  removed: boolean;
+  category: Category
+}
 
-export type PaymentRecords = Record<Category, PaymentRecord>;
-export type AllPaymentRecords = [Month, PaymentRecords][];
+export type UnConfirmedPaymentRecord = {
+  amount: string;
+  category: Category;
+} | null
 
-export type PaymentRecordsUnion = Record<Category, PaymentRecord | PaymentRecordDeprecated>;
-export type AllPaymentRecordsUnion = [Month, PaymentRecordsUnion][];
+// export type Month = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11;
+
+// export type PaymentRecords = Record<Category, PaymentRecord>;
+// export type AllPaymentRecords = [Month, PaymentRecords][];
+
+// export type PaymentRecordsUnion = Record<Category, PaymentRecord | PaymentRecordDeprecated>;
+// export type AllPaymentRecordsUnion = [Month, PaymentRecordsUnion][];

@@ -1,8 +1,8 @@
 import { Bar, BarChart, LabelList, XAxis } from "recharts";
 import { ChartContainer, type ChartConfig } from "@/components/ui/chart"
-import { AllPaymentRecordsSplitByCycleContext, SlicePointsContext } from "./app-records-contexts";
+import { RecordsSplitByCycleContext, SlicePointsContext } from "./app-records-contexts";
 import { useContext } from "react";
-import { PaymentRecordV2 } from "@/types";
+import { ConfirmedPaymentRecord } from "@/types";
 
 const chartConfig = {
   records: {
@@ -17,8 +17,8 @@ export default function AppStatisticMonthChart({
   onBarClick: (index: number) => void;
 }) {
   const slicePoints = useContext(SlicePointsContext);
-  const allPaymentRecordsSplitByCycle = useContext(AllPaymentRecordsSplitByCycleContext);
-  const chartData = getChartData(slicePoints, allPaymentRecordsSplitByCycle);
+  const recordsSplitByCycle = useContext(RecordsSplitByCycleContext);
+  const chartData = getChartData(slicePoints, recordsSplitByCycle);
   
   return <ChartContainer config={chartConfig}>
     <BarChart accessibilityLayer data={chartData}>
@@ -45,7 +45,7 @@ export default function AppStatisticMonthChart({
   }
 }
 
-function getChartData(slicePoints: number[], allPaymentRecordsSplitByCycle: PaymentRecordV2['confirmed'][]) {
+function getChartData(slicePoints: number[], allPaymentRecordsSplitByCycle: ConfirmedPaymentRecord[][]) {
   const result = slicePoints.map((point, index) => {
     const start = new Date(point).toLocaleString().split(" ")[0].slice(5);
 
