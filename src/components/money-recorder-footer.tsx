@@ -11,7 +11,7 @@ export default function MoneyRecorderFooter() {
   const unconfirmedRecords = useContext(UnconfirmedRecordsContext);
   const setUnconfirmedRecords = useContext(SetUnconfirmedRecordsContext);
 
-  return <div className='flex gap-2 items-start'>
+  return <div className='flex gap-4 items-start'>
     <div className='shrink-0'>
       <div className="text-muted-foreground text-xs">
         {new Date(slicePoints[11]).toLocaleDateString() + ' - 至今'}

@@ -45,7 +45,7 @@ export default function AppStatisticHeatMap({
       { startDate.toLocaleDateString() } - { endDate.toLocaleDateString() }
     </div>
     <div className="flex flex-row justify-between my-2">
-      { weekdays.map((weekday) => <div className="w-9 text-center font-bold">{ weekday }</div> ) }
+      { weekdays.map((weekday) => <div key={weekday} className="w-9 text-center font-bold">{ weekday }</div> ) }
     </div>
     <CalendarHeatmap
       showMonthLabels={false}

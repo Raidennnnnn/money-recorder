@@ -6,7 +6,7 @@ import CategoryDetail from './category-detail';
 
 const categorys = Object.values(Category).filter((c): c is Category => !isNaN(Number(c)));
 
-export default function MoneyRecorderV2() {
+export default function MoneyRecorder() {
   const [selectedCategory, setSelectedCategory] = useState<Category>();
 
   return <div className="flex flex-col gap-2">

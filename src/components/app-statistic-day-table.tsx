@@ -3,7 +3,7 @@ import { ConfirmedPaymentRecord } from "@/types"
 import { CATEGORY_NAME } from "@/lib/category-related"
 
 export default function AppStatisticDayTable({ data }: { data: ConfirmedPaymentRecord[] }) {
-  return <Table>
+  return <Table className="mb-18">
     <TableHeader>
       <TableRow>
         <TableHead>时间</TableHead>
