@@ -19,13 +19,13 @@ export default function CategoryDetailListV2({ records }: { records: ConfirmedPa
     }, {} as Record<string, typeof records>);
   }, [records]);
 
-  return <Accordion type="single" collapsible defaultValue={Object.keys(groupedRecords)[0]} className="m-4">
+  return <Accordion type="single" collapsible defaultValue={Object.keys(groupedRecords)[0]} className="overflow-y-auto">
     {
       Object.entries(groupedRecords).map(([date, records]) => <AccordionItem value={date} key={date} >
-        <AccordionTrigger className="bg-background font-bold">
+        <AccordionTrigger className="mx-4 bg-background font-bold">
           <CategoryDetailListItemHeader date={date} />
         </AccordionTrigger>
-        <AccordionContent>
+        <AccordionContent className="mx-4">
           {
             records.map((record, index) => <CategoryDetailListItemContent record={record} isLast={index === records.length - 1} />)
           }
