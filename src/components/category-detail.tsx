@@ -5,11 +5,12 @@ import { Category } from "@/types";
 import CategoryDetailListV2 from "./category-detail-list-v2";
 import FluentEmojiDisguisedFace from "./icon/fluent-emoji-disguised-face";
 import BackHomeButton from "./back-home-button";
+import AppSettings from "./app-settings";
 
 export default function CategoryDetail() {
   const { category } = useParams();
   const currentCycleRecords = useContext(CurrentCycleRecordsContext);
-  
+
   const records = useMemo(
     () => currentCycleRecords.filter(record => record.category === Number(category) as Category), 
     [currentCycleRecords, category]
@@ -24,6 +25,9 @@ export default function CategoryDetail() {
           <span className="text-muted-foreground">暂无记录</span>
         </div>
     }
-    <BackHomeButton />
+    <div className="fixed bottom-8 right-4 flex gap-2">
+      <AppSettings />
+      <BackHomeButton />
+    </div>
   </>;
 }
