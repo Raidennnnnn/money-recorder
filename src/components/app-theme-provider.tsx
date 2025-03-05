@@ -1,4 +1,4 @@
-import { useRef, useState } from "react"
+import { useEffect, useState } from "react"
 import { Theme, ThemeProviderContext } from "./app-theme-context"
 
 type ThemeProviderProps = {
@@ -7,45 +7,44 @@ type ThemeProviderProps = {
   storageKey?: string
 }
 
-export function ThemeProvider({
+export default function ThemeProviderV2({
   children,
-  defaultTheme = "dark",
+  defaultTheme = "system",
   storageKey = "vite-ui-theme",
-  ...props
 }: ThemeProviderProps) {
-  const firstMount = useRef<boolean>(true);
   const [theme, setTheme] = useState<Theme>(
     () => (localStorage.getItem(storageKey) as Theme) || defaultTheme
-  );
+  )
 
-  /**
-   * 初次加载直接设置主题，如果在useEffect中设置主题，会导致屏闪
-   */
-  if (firstMount.current) {
-    const theme = localStorage.getItem(storageKey) as Theme || defaultTheme;
-    changeTheme(theme)
-    firstMount.current = false;
-  }
+  useEffect(() => {
+    const root = window.document.documentElement
+
+    root.classList.remove("light", "dark")
+
+    if (theme === "system") {
+      const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
+        .matches
+        ? "dark"
+        : "light"
+
+      root.classList.add(systemTheme)
+      return
+    }
+
+    root.classList.add(theme)
+  }, [theme])
 
   const value = {
     theme,
     setTheme: (theme: Theme) => {
       localStorage.setItem(storageKey, theme)
-      changeTheme(theme)
       setTheme(theme)
     },
   }
 
   return (
-    <ThemeProviderContext.Provider {...props} value={value}>
+    <ThemeProviderContext.Provider value={value}>
       {children}
     </ThemeProviderContext.Provider>
   )
-
-  function changeTheme(theme: Theme) {
-    const root = window.document.documentElement
-    root.classList.remove("light", "dark")
-    root.classList.add(theme)
-  }
 }
-

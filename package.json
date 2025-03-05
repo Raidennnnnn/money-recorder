@@ -8,11 +8,13 @@
     "dev": "vite --host",
     "build": "tsc -b && vite build",
     "deploy": "pnpm build && gh-pages -d dist",
+    "just-deploy": "gh-pages -d dist",
     "lint": "eslint . --fix",
     "preview": "vite preview"
   },
   "dependencies": {
     "@radix-ui/react-accordion": "^1.2.3",
+    "@radix-ui/react-dialog": "^1.1.6",
     "@radix-ui/react-label": "^2.1.1",
     "@radix-ui/react-radio-group": "^1.2.2",
     "@radix-ui/react-select": "^2.1.5",
@@ -25,12 +27,14 @@
     "gh-pages": "^6.3.0",
     "lucide-react": "^0.474.0",
     "react": "^19.0.0",
+    "react-calendar-heatmap": "^1.10.0",
     "react-countup": "^6.5.3",
     "react-dom": "^19.0.0",
     "react-router": "^7.1.5",
     "recharts": "^2.15.1",
     "tailwind-merge": "^3.0.1",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "vaul": "^1.1.2"
   },
   "devDependencies": {
     "@eslint/js": "^9.18.0",
@@ -39,6 +43,7 @@
     "@types/dom-view-transitions": "^1.0.5",
     "@types/node": "^22.13.1",
     "@types/react": "^19.0.8",
+    "@types/react-calendar-heatmap": "^1.9.0",
     "@types/react-dom": "^19.0.3",
     "@vite-pwa/assets-generator": "^0.2.6",
     "@vitejs/plugin-react": "^4.2.1",

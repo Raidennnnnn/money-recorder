@@ -1,31 +1,35 @@
-import { useParams } from "react-router";
-import { RecordContext } from "./record-context";
-import { useContext, useMemo } from "react";
+import { useContext } from "react";
+import { useMemo } from "react";
+import { Drawer, DrawerContent } from "./ui/drawer";
+import { CurrentCycleRecordsContext } from "./app-records-contexts";
 import { Category } from "@/types";
-import CategoryDetailList from "./category-detail-list";
-import FluentEmojiDisguisedFace from "./icon/fluent-emoji-disguised-face";
-import BackHomeButton from "./back-home-button";
-import ThemeToggle from "./app-theme-toggle";
+import CategoryDetailListV2 from "./category-detail-list";
+import { FluentEmojiDisguisedFace } from "./icon";
 
-export default function CategoryDetail() {
-  const { category } = useParams();
-  const thisMonthRecords = useContext(RecordContext);
-  const records = useMemo(() => thisMonthRecords[Number(category) as Category], [thisMonthRecords, category]);
+export default function CategoryDetail({
+  category,
+  onClose
+}: {
+  category: Category | undefined,
+  onClose: () => void
+}) {
+  const currentCycleRecords = useContext(CurrentCycleRecordsContext);
 
-  return (
-    <>
+  const records = useMemo(
+    () => currentCycleRecords.filter(record => record.category === Number(category) as Category), 
+    [currentCycleRecords, category]
+  );
+
+  return <Drawer open={!!category} onClose={onClose}>
+    <DrawerContent className="min-h-[500px]">
       {
-        records.confirmed.length > 0 
-          ? <CategoryDetailList records={records} category={Number(category) as Category} />
-          : <div className="flex flex-col items-center justify-center h-screen">
+        records.length > 0 
+          ? <CategoryDetailListV2 records={records} />
+          : <div className="flex flex-col items-center justify-center flex-1">
             <FluentEmojiDisguisedFace className="w-24 h-24" />  
             <span className="text-muted-foreground">暂无记录</span>
           </div>
       }
-      <div className="fixed bottom-8 right-4 flex gap-2">
-        <ThemeToggle />
-        <BackHomeButton />
-      </div>
-    </>
-  );
+    </DrawerContent>
+  </Drawer>
 }
