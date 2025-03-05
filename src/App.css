@@ -28,20 +28,20 @@
 }
 
 .react-calendar-heatmap .color-empty { fill: var(--color-accent); }
-.react-calendar-heatmap .color-scale-0 { fill: var(--color-pink-100); }
-.react-calendar-heatmap .color-scale-1 { fill: var(--color-pink-200); }
-.react-calendar-heatmap .color-scale-2 { fill: var(--color-pink-300); }
-.react-calendar-heatmap .color-scale-3 { fill: var(--color-pink-400); }
-.react-calendar-heatmap .color-scale-4 { fill: var(--color-pink-500); }
-.react-calendar-heatmap .color-scale-5 { fill: var(--color-pink-600); }
-.react-calendar-heatmap .color-scale-6 { fill: var(--color-pink-700); }
-.react-calendar-heatmap .color-scale-7 { fill: var(--color-pink-800); }
+.react-calendar-heatmap .color-scale-0 { fill: var(--color-blue-100); }
+.react-calendar-heatmap .color-scale-1 { fill: var(--color-blue-200); }
+.react-calendar-heatmap .color-scale-2 { fill: var(--color-blue-300); }
+.react-calendar-heatmap .color-scale-3 { fill: var(--color-blue-400); }
+.react-calendar-heatmap .color-scale-4 { fill: var(--color-blue-500); }
+.react-calendar-heatmap .color-scale-5 { fill: var(--color-blue-600); }
+.react-calendar-heatmap .color-scale-6 { fill: var(--color-blue-700); }
+.react-calendar-heatmap .color-scale-7 { fill: var(--color-blue-800); }
 
-.dark .react-calendar-heatmap .color-scale-0 { fill: oklch(from var(--color-pink-200) calc(l/2 + .2) c h); }
-.dark .react-calendar-heatmap .color-scale-1 { fill: oklch(from var(--color-pink-300) calc(l/2 + .2) c h); }
-.dark .react-calendar-heatmap .color-scale-2 { fill: oklch(from var(--color-pink-400) calc(l/2 + .2) c h); }
-.dark .react-calendar-heatmap .color-scale-3 { fill: oklch(from var(--color-pink-500) calc(l/2 + .2) c h); }
-.dark .react-calendar-heatmap .color-scale-4 { fill: oklch(from var(--color-pink-600) calc(l/2 + .2) c h); }
-.dark .react-calendar-heatmap .color-scale-5 { fill: oklch(from var(--color-pink-700) calc(l/2 + .2) c h); }
-.dark .react-calendar-heatmap .color-scale-6 { fill: oklch(from var(--color-pink-800) calc(l/2 + .2) c h); }
-.dark .react-calendar-heatmap .color-scale-7 { fill: oklch(from var(--color-pink-900) calc(l/2 + .2) c h); }
+.dark .react-calendar-heatmap .color-scale-0 { fill: oklch(from var(--color-blue-200) calc(l/2 + .2) c h); }
+.dark .react-calendar-heatmap .color-scale-1 { fill: oklch(from var(--color-blue-300) calc(l/2 + .2) c h); }
+.dark .react-calendar-heatmap .color-scale-2 { fill: oklch(from var(--color-blue-400) calc(l/2 + .2) c h); }
+.dark .react-calendar-heatmap .color-scale-3 { fill: oklch(from var(--color-blue-500) calc(l/2 + .2) c h); }
+.dark .react-calendar-heatmap .color-scale-4 { fill: oklch(from var(--color-blue-600) calc(l/2 + .2) c h); }
+.dark .react-calendar-heatmap .color-scale-5 { fill: oklch(from var(--color-blue-700) calc(l/2 + .2) c h); }
+.dark .react-calendar-heatmap .color-scale-6 { fill: oklch(from var(--color-blue-800) calc(l/2 + .2) c h); }
+.dark .react-calendar-heatmap .color-scale-7 { fill: oklch(from var(--color-blue-900) calc(l/2 + .2) c h); }
