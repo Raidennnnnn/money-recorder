@@ -27,7 +27,7 @@ export default function MoneyRecorderV2() {
         ))
       }
     </div>
-    <div className='flex gap-2 items-end'>
+    <div className='flex gap-2 items-start'>
       <div className='shrink-0'>
         <div className="text-muted-foreground text-xs">
           {new Date(slicePoints[11]).toLocaleDateString() + ' - 至今'}
