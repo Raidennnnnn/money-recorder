@@ -4,7 +4,7 @@ import { ConfirmedPaymentRecord } from '../types';
 import { SetPast12CyclesRecords } from './app-records-contexts';
 import { Undo2, XIcon } from 'lucide-react';
 
-export default function CategoryDetailListV2({ records }: { records: ConfirmedPaymentRecord[] }) {
+export default function CategoryDetailList({ records }: { records: ConfirmedPaymentRecord[] }) {
   const groupedRecords = useMemo(() => {
     // 按时间戳倒序排列记录
     const sortedRecords = [...records].sort((a, b) => b.timeStamp - a.timeStamp);
@@ -27,7 +27,7 @@ export default function CategoryDetailListV2({ records }: { records: ConfirmedPa
         </AccordionTrigger>
         <AccordionContent className="mx-4">
           {
-            records.map((record, index) => <CategoryDetailListItemContent record={record} isLast={index === records.length - 1} />)
+            records.map((record, index) => <CategoryDetailListItemContent key={record.timeStamp} record={record} isLast={index === records.length - 1} />)
           }
         </AccordionContent>
       </AccordionItem >)

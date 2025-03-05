@@ -1,10 +1,11 @@
 import { useContext } from "react";
 import { useMemo } from "react";
-import { Drawer, DrawerContent } from "./ui/drawer";
+import { Drawer, DrawerContent, DrawerDescription, DrawerHeader, DrawerTitle } from "./ui/drawer";
 import { CurrentCycleRecordsContext } from "./app-records-contexts";
 import { Category } from "@/types";
 import CategoryDetailListV2 from "./category-detail-list";
 import { FluentEmojiDisguisedFace } from "./icon";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 
 export default function CategoryDetail({
   category,
@@ -22,6 +23,14 @@ export default function CategoryDetail({
 
   return <Drawer open={!!category} onClose={onClose}>
     <DrawerContent className="min-h-[500px]">
+      <VisuallyHidden>
+        <DrawerHeader>
+          <DrawerTitle>类目详情</DrawerTitle>
+        </DrawerHeader>
+        <DrawerDescription>
+          查看类目详情
+        </DrawerDescription>
+      </VisuallyHidden>
       {
         records.length > 0 
           ? <CategoryDetailListV2 records={records} />
