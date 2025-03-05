@@ -10,6 +10,7 @@ export function useNavigateWithTransition() {
     } else {
       const transitionClass = destination === '/' ? 'back-transition' : 'forward-transition';
       document.documentElement.classList.add(transitionClass);
+
       const transition = document.startViewTransition(() => {
         flushSync(() => {
           navigate(destination);
