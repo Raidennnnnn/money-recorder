@@ -3,7 +3,7 @@ import { RecordsSplitByCycleContext } from "./app-records-contexts";
 import CalendarHeatmap, { ReactCalendarHeatmapValue } from "react-calendar-heatmap";
 import { SlicePointsContext } from "./app-records-contexts";
 import { ConfirmedPaymentRecord } from "@/types";
-
+import { flushSync } from "react-dom";
 const weekdays = ['日', '一', '二', '三', '四', '五', '六'];
 
 export default function AppStatisticHeatMap({
@@ -40,7 +40,7 @@ export default function AppStatisticHeatMap({
     });
   }, [valuesByDay]);
 
-  return <div className="w-full p-2">
+  return <div id="heat-map" className="w-full p-2">
     <div className="text-sm text-muted-foreground">
       { startDate.toLocaleDateString() } - { endDate.toLocaleDateString() }
     </div>
@@ -65,7 +65,20 @@ export default function AppStatisticHeatMap({
   />
   </div>;
 
-  function handleCellClick(value: ReactCalendarHeatmapValue<string> | undefined) {
-    onCellClick(value ? valuesByDay[value.date]: []);
+  async function handleCellClick(value: ReactCalendarHeatmapValue<string> | undefined) {
+    const dayTable = document.getElementById('day-table');
+    if (dayTable) {
+      dayTable.style.viewTransitionName = 'day-table';
+    }
+    const transition = document.startViewTransition(() => {
+      flushSync(() => {
+        onCellClick(value ? valuesByDay[value.date]: []);
+      });
+    });
+
+    await transition.finished;
+    if (dayTable) {
+      dayTable.style.viewTransitionName = '';
+    }
   }
 }
