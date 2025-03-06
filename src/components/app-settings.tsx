@@ -16,7 +16,7 @@ import AppSettingsInputLayout from "./app-settings-input-layout";
 export default function AppSettings() {
   return <Drawer>
     <DrawerTrigger asChild>
-      <Button variant="outline" size="sm" className="px-2">
+      <Button type="button" title="设置" variant="outline" size="sm" className="px-2">
         <SettingsIcon className="w-4 h-4" />
       </Button>
     </DrawerTrigger>

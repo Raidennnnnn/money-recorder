@@ -14,7 +14,14 @@ export default function AppLayout() {
     <Outlet />
     <div className="fixed bottom-4 right-4 flex gap-2 float-button-container">
       <AppSettings />
-      <Button variant="outline" size="sm" className="px-2 navigation-button" onClick={() => navigate(isHomePage ? '/statistic' : '/')}>
+      <Button 
+        size="sm" 
+        type="button" 
+        variant="outline" 
+        className="px-2 navigation-button" 
+        title={isHomePage ? '统计' : '首页'} 
+        onClick={() => navigate(isHomePage ? '/statistic' : '/')}
+      >
         { isHomePage ? <ChartColumn className="w-4 h-4" /> : <Home className="w-4 h-4" /> }
       </Button>
     </div>

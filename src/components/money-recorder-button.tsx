@@ -30,6 +30,8 @@ export default function MoneyRecorderButton({
   const ratio = confirmedTotal === 0 ? 0 : (confirmedTotal / totalConfirmed);
 
   return <Button
+    type="button"
+    // title={String(category)}
     variant="outline"
     className={`relative justify-start h-fit w-full p-2.5 overflow-hidden select-none`}
     onTouchStart={handlePressStart}

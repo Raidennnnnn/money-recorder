@@ -17,7 +17,7 @@ export default function CategoryDetail({
   const currentCycleRecords = useContext(CurrentCycleRecordsContext);
 
   const records = useMemo(
-    () => currentCycleRecords.filter(record => record.category === Number(category) as Category), 
+    () => currentCycleRecords.filter(record => record.category === category), 
     [currentCycleRecords, category]
   );
 
