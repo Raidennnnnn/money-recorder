@@ -7,23 +7,26 @@ import ThemeProviderV2 from './components/app-theme-provider';
 import MoneyRecorder from './components/money-recorder';
 import NotFoundPage from './components/not-found-page';
 import React from 'react';
+import AppInputLayoutProvider from './components/app-input-layout-provider.tsx';
 
 const AppStatistic = React.lazy(() => import('./components/app-statistic.tsx'));
 
 export default function App() {
   return <AppRecordsProviders>
     <ThemeProviderV2 defaultTheme="system" storageKey="vite-ui-theme">
-      <HashRouter>
-        <Suspense fallback={<div className="h-screen flex items-center justify-center">Loading...</div>}>
-          <Routes>
-            <Route path="/" element={<AppLayout />}>
-              <Route index element={<MoneyRecorder />} />
-              <Route path="statistic" element={<AppStatistic />} />
-              <Route path="*" element={<NotFoundPage />} />
-            </Route>
-          </Routes>
-        </Suspense>
-      </HashRouter>
+      <AppInputLayoutProvider>
+        <HashRouter>
+          <Suspense fallback={<div className="h-screen flex items-center justify-center">Loading...</div>}>
+            <Routes>
+              <Route path="/" element={<AppLayout />}>
+                <Route index element={<MoneyRecorder />} />
+                <Route path="statistic" element={<AppStatistic />} />
+                <Route path="*" element={<NotFoundPage />} />
+              </Route>
+            </Routes>
+          </Suspense>
+        </HashRouter> 
+      </AppInputLayoutProvider>
     </ThemeProviderV2>
   </AppRecordsProviders>;
 }

@@ -11,6 +11,7 @@ import {
 import AppSettingsStartDay from "./app-settings-start-day";
 import AppSettingsTheme from "./app-settings-theme";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
+import AppSettingsInputLayout from "./app-settings-input-layout";
 
 export default function AppSettings() {
   return <Drawer>
@@ -25,14 +26,14 @@ export default function AppSettings() {
           <DrawerTitle>设置</DrawerTitle>
         </DrawerHeader>
         <DrawerDescription>
-          设置应用的开始日期和主题
+          设置应用的开始日期、主题和输入框位置
         </DrawerDescription>
       </VisuallyHidden>
-      <div className="my-8 mx-4">
+      <div className="mt-4 mb-8 mx-4">
         <AppSettingsStartDay />
         <AppSettingsTheme />
+        <AppSettingsInputLayout />
       </div>
-
     </DrawerContent>
   </Drawer>
 }

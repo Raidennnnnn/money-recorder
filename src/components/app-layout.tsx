@@ -12,7 +12,7 @@ export default function AppLayout() {
   
   return <div>
     <Outlet />
-    <div className={`fixed ${isHomePage ? 'bottom-18' : 'bottom-8'} right-4 flex gap-2 float-button-container`}>
+    <div className="fixed bottom-6 right-4 flex gap-2 float-button-container">
       <AppSettings />
       <Button variant="outline" size="sm" className="px-2 navigation-button" onClick={() => navigate(isHomePage ? '/statistic' : '/')}>
         { isHomePage ? <ChartColumn className="w-4 h-4" /> : <Home className="w-4 h-4" /> }

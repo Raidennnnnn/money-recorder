@@ -14,9 +14,9 @@ const THEME_ICON_MAP = {
 export default function AppSettingsTheme() {
   const { theme, setTheme } = useTheme();
 
-  return <div className="flex items-center mt-4">
+  return <div className="flex items-center mt-2">
     <label htmlFor="day-type" className="mr-4 text-muted-foreground">主题</label>
-    <RadioGroup defaultValue={theme} onValueChange={handleThemeChange} className="flex p-1 rounded-lg w-fit border border-input">
+    <RadioGroup defaultValue={theme} onValueChange={handleThemeChange} className="flex p-1 rounded-lg w-fit gap-2">
       {
         Object
           .entries(THEME_ICON_MAP)
