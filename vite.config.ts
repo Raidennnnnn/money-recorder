@@ -21,7 +21,7 @@ export default defineConfig({
       name: 'money-recorder',
       short_name: 'money-recorder',
       description: 'simple money recorder',
-      theme_color: '#000000',
+      theme_color: '#ffffff',
     },
 
     workbox: {
