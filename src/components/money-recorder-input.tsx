@@ -4,12 +4,17 @@ import { Input } from "./ui/input";
 import { UnconfirmedRecordsContext } from "./app-records-contexts";
 
 
-export default function MoneyRecorderInput() {
+export default function MoneyRecorderInput({
+  className,
+}: {
+  className?: string;
+}) {
   const unconfirmedRecords = useContext(UnconfirmedRecordsContext);
   const setUnconfirmedRecords = useContext(SetUnconfirmedRecordsContext);
 
   return <Input
     type="text"
+    className={className}
     value={unconfirmedRecords.amount}
     placeholder="金额"
     onChange={handleInputChange}

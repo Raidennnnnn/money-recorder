@@ -45,7 +45,7 @@ function RadioGroupItemButton({ value, id, children }: { value: string, id: stri
     <RadioGroupItem value={value} id={id} className="peer sr-only" />
     <Label 
       htmlFor={id} 
-      className="flex items-center justify-center w-8 h-8 rounded-md peer-data-[state=checked]:bg-accent peer-data-[state=checked]:outline-ring peer-data-[state=checked]:outline-3 cursor-pointer"
+      className="flex items-center justify-center w-8 h-8 rounded-md peer-data-[state=checked]:bg-accent peer-data-[state=checked]:outline-blue-600 dark:peer-data-[state=checked]:outline-blue-800 peer-data-[state=checked]:outline-3 cursor-pointer"
     >
       {children}
     </Label>

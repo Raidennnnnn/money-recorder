@@ -7,7 +7,7 @@ import { ConfirmedPaymentRecord } from "@/types";
 const chartConfig = {
   records: {
     label: "支出",
-    color: "var(--color-blue-500)",
+    color: "var(--color-blue-600)",
   },
 } satisfies ChartConfig
 

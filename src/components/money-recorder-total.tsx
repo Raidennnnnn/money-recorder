@@ -2,11 +2,15 @@ import { SlicePointsContext } from "./app-records-contexts";
 import { TotalConfirmedContext } from "./app-records-contexts";
 import { useContext } from "react";
 
-export default function MoneyRecorderTotal() {
+export default function MoneyRecorderTotal({
+  className,
+}: {
+  className?: string;
+}) {
   const slicePoints = useContext(SlicePointsContext);
   const totalConfirmed = useContext(TotalConfirmedContext);
 
-  return <div className='shrink-0'>
+  return <div className={className}>
     <div className="text-muted-foreground text-xs">
       {new Date(slicePoints[11]).toLocaleDateString() + ' - 至今'}
     </div>
