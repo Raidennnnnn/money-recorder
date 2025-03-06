@@ -42,8 +42,12 @@ export default function AppStatisticMonthChart({
 
   async function handleBarClick(_data: { cycle: string, records: number }, index: number) {
     const heatMap = document.getElementById('heat-map');
+    const heatMapContainer = document.getElementById('heat-map-container');
     if (heatMap) {
       heatMap.style.viewTransitionName = 'heat-map';
+    }
+    if (heatMapContainer) {
+      heatMapContainer.style.viewTransitionName = 'heat-map-container';
     }
     const transition = document.startViewTransition(() => {
       flushSync(() => {
@@ -54,6 +58,9 @@ export default function AppStatisticMonthChart({
     await transition.finished;
     if (heatMap) {
       heatMap.style.viewTransitionName = '';
+    }
+    if (heatMapContainer) {
+      heatMapContainer.style.viewTransitionName = '';
     }
   }
 }

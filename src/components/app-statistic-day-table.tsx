@@ -6,9 +6,9 @@ export default function AppStatisticDayTable({ data }: { data: ConfirmedPaymentR
   return <Table id="day-table" className="mb-18">
     <TableHeader>
       <TableRow>
-        <TableHead>时间</TableHead>
-        <TableHead>金额</TableHead>
-        <TableHead>分类</TableHead>
+        <TableHead className="w-1/2">时间</TableHead>
+        <TableHead className="w-1/4">金额</TableHead>
+        <TableHead className="w-1/4">分类</TableHead>
       </TableRow>
     </TableHeader>
     <TableBody>

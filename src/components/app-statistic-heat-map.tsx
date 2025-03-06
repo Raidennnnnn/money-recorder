@@ -47,22 +47,24 @@ export default function AppStatisticHeatMap({
     <div className="flex flex-row justify-between my-2">
       { weekdays.map((weekday) => <div key={weekday} className="w-9 text-center font-bold">{ weekday }</div> ) }
     </div>
-    <CalendarHeatmap
-      showMonthLabels={false}
-      showWeekdayLabels={false}
-      showOutOfRangeDays={false}
-      horizontal={false}
-      startDate={calenderStart}
-      endDate={endDate}
-      values={values}
-      classForValue={(value) => {
-        if (!value) {
-          return 'color-empty';
-        }
-        return `color-scale-${Math.min(Math.round(value.count / 30), 7)}`;
-      }}
-      onClick={handleCellClick}
-  />
+    <div id="heat-map-container">
+      <CalendarHeatmap
+        showMonthLabels={false}
+        showWeekdayLabels={false}
+        showOutOfRangeDays={false}
+        horizontal={false}
+        startDate={calenderStart}
+        endDate={endDate}
+        values={values}
+        classForValue={(value) => {
+          if (!value) {
+            return 'color-empty';
+          }
+          return `color-scale-${Math.min(Math.round(value.count / 30), 7)}`;
+        }}
+        onClick={handleCellClick}
+      />
+    </div>
   </div>;
 
   async function handleCellClick(value: ReactCalendarHeatmapValue<string> | undefined) {
