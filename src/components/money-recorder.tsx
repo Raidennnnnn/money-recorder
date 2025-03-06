@@ -12,8 +12,8 @@ export default function MoneyRecorder() {
   const { inputLayout } = useContext(AppInputLayoutContext);
   const [selectedCategory, setSelectedCategory] = useState<Category>();
 
-  return <div className="relative h-full">
-    <div className={`absolute w-full flex flex-col gap-2 transition-[top] duration-300 ${inputLayout === 'down' ? 'top-0' : 'top-12'} `}>
+  return <div className="flex flex-col gap-2">
+    <div className={`flex flex-col gap-2 transition duration-300 ${inputLayout === 'up' ? 'translate-y-11' : ''} `}>
       {
         categorys.map((category) => <MoneyRecorderButton
           key={category}
@@ -22,8 +22,8 @@ export default function MoneyRecorder() {
         />)
       }
     </div>
-    <MoneyRecorderInput className={`absolute transition-all duration-300 ${inputLayout === 'down' ? 'top-[652px]' : 'top-0'} `} />
-    <MoneyRecorderTotal className='absolute bottom-0 left-1' />
+    <MoneyRecorderInput className={`transition duration-300 ${inputLayout === 'up' ? '-translate-y-[644px]' : ''} `} />
+    <MoneyRecorderTotal />
     <CategoryDetail category={selectedCategory} onClose={() => setSelectedCategory(undefined)}  />
   </div>
 };
