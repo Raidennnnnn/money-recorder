@@ -31,10 +31,6 @@
   animation: 500ms cubic-bezier(0.4, 0, 0.2, 1) both slide-from-top;
 }
 
-/* .float-button-container {
-  view-transition-name: float-button-container;
-} */
-
 ::view-transition-old(float-button-container),
 ::view-transition-new(float-button-container) {
   animation-duration: 500ms;
