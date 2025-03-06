@@ -12,7 +12,7 @@ export default function AppLayout() {
   
   return <div className="h-full">
     <Outlet />
-    <div className="fixed bottom-4 right-4 flex gap-2 float-button-container">
+    <div className="fixed bottom-8 right-4 flex gap-2 float-button-container">
       <AppSettings />
       <Button 
         size="sm" 

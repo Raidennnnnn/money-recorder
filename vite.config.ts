@@ -54,18 +54,6 @@ export default defineConfig({
   build: {
     rollupOptions: {
       output: {
-        // manualChunks: (id) => {
-        //   if (id.includes('node_modules')) {
-        //     const moduleName = id.toString().split('node_modules/')[1].split('/')[1].toString()
-        //     if (moduleName.includes('recharts')) {
-        //       return 'recharts'
-        //     }
-        //     if (moduleName.includes('react-dom') || moduleName.includes('react')) {
-        //       return 'react'
-        //     }
-        //     return 'vendor'
-        //   }
-        // }
         manualChunks: {
           vendor: ['recharts', 'react', 'react-dom'],
         }
