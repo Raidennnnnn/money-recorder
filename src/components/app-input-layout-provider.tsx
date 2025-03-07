@@ -2,7 +2,9 @@ import { useState } from "react";
 import { AppInputLayoutContext } from "./app-input-layout-context";
 
 export default function AppInputLayoutProvider({ children }: { children: React.ReactNode }) {
-  const [inputLayout, setInputLayout] = useState<'up' | 'down'>('down');
+  const [inputLayout, setInputLayout] = useState<'up' | 'down'>(
+    localStorage.getItem('app-input-layout') as 'up' | 'down' || 'down'
+  );
 
   const value = {
     inputLayout,

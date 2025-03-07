@@ -3,7 +3,6 @@ import { ChartContainer, type ChartConfig } from "@/components/ui/chart"
 import { RecordsSplitByCycleContext, SlicePointsContext } from "./app-records-contexts";
 import { useContext } from "react";
 import { ConfirmedPaymentRecord } from "@/types";
-import { flushSync } from "react-dom";
 
 const chartConfig = {
   records: {
@@ -41,27 +40,7 @@ export default function AppStatisticMonthChart({
   </ChartContainer>;
 
   async function handleBarClick(_data: { cycle: string, records: number }, index: number) {
-    const heatMap = document.getElementById('heat-map');
-    const heatMapContainer = document.getElementById('heat-map-container');
-    if (heatMap) {
-      heatMap.style.viewTransitionName = 'heat-map';
-    }
-    if (heatMapContainer) {
-      heatMapContainer.style.viewTransitionName = 'heat-map-container';
-    }
-    const transition = document.startViewTransition(() => {
-      flushSync(() => {
-        onBarClick(index);
-      });
-    });
-
-    await transition.finished;
-    if (heatMap) {
-      heatMap.style.viewTransitionName = '';
-    }
-    if (heatMapContainer) {
-      heatMapContainer.style.viewTransitionName = '';
-    }
+    onBarClick(index);
   }
 }
 

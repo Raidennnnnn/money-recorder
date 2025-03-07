@@ -1,3 +1,13 @@
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fade-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
 @keyframes slide-from-bottom {
   from { transform: translateY(100%); }
 }
@@ -22,12 +32,36 @@
   from { transform: translateX(100%); }
 }
 
-::view-transition-old(heat-map-container) {
-  animation: 500ms cubic-bezier(0.4, 0, 0.2, 1) both slide-to-left;
+@keyframes slide-to-right {
+  to { transform: translateX(100%); }
 }
 
-::view-transition-new(heat-map-container) {
-  animation: 500ms cubic-bezier(0.4, 0, 0.2, 1) both slide-from-right;
+@keyframes slide-from-left {
+  from { transform: translateX(-100%); }
+}
+
+::view-transition-old(previous-image) {
+  animation: 
+    90ms cubic-bezier(0.4, 0, 1, 1) both fade-out,
+    300ms cubic-bezier(0.4, 0, 0.2, 1) both slide-to-right;
+}
+
+::view-transition-new(previous-image) {
+  animation: 
+    210ms cubic-bezier(0, 0, 0.2, 1) 90ms both fade-in,
+    300ms cubic-bezier(0.4, 0, 0.2, 1) both slide-from-left;
+}
+
+::view-transition-old(next-image) {
+  animation: 
+    90ms cubic-bezier(0.4, 0, 1, 1) both fade-out,
+    300ms cubic-bezier(0.4, 0, 0.2, 1) both slide-to-left;
+}
+
+::view-transition-new(next-image) {
+  animation: 
+    210ms cubic-bezier(0, 0, 0.2, 1) 90ms both fade-in,
+    300ms cubic-bezier(0.4, 0, 0.2, 1) both slide-from-right;
 }
 
 .forward-transition::view-transition-old(root) {
