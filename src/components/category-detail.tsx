@@ -4,7 +4,7 @@ import { Drawer, DrawerContent, DrawerDescription, DrawerHeader, DrawerTitle } f
 import { CurrentCycleRecordsContext } from "./app-records-contexts";
 import { Category } from "@/types";
 import CategoryDetailListV2 from "./category-detail-list";
-import { FluentEmojiDisguisedFace } from "./icon";
+import { FluentEmojiDisguisedFace } from "./icon/fluent-emoji-disguised-face";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 
 export default function CategoryDetail({

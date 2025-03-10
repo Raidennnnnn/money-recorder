@@ -13,8 +13,8 @@ export default function App() {
     <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
       <AppInputLayoutProvider>
         <HashRouter>
-          <Routes>
-            <Route path="/" element={<AppLayout />}>
+            <Routes>
+              <Route path="/" element={<AppLayout />}>
               <Route index element={<MoneyRecorder />} />
               <Route path="statistic" element={<Statistic />} />
               <Route path="*" element={<NotFoundPage />} />
