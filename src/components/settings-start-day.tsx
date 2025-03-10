@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { RadioGroup, RadioGroupItemButton } from "./ui/radio-group";
 import { SetSelectedDayContext } from "./app-records-contexts";
 
-export default function AppSettingsStartDay() {
+export default function SettingsStartDay() {
   const selectedDay = useContext(SelectedDayContext);
   const setSelectedDay = useContext(SetSelectedDayContext);
   

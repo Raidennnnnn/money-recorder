@@ -1,5 +1,5 @@
 import { Outlet, useLocation } from "react-router";
-import AppSettings from "./app-settings";
+import AppSettings from "./settings";
 import { useNavigateWithTransition } from "@/hooks/use-navi-with-transition";
 import { Button } from "./ui/button";
 import { ChartColumn, Home } from "lucide-react";

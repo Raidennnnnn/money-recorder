@@ -11,7 +11,7 @@ const chartConfig = {
   },
 } satisfies ChartConfig
 
-export default function AppStatisticMonthChart({
+export default function StatisticMonthChart({
   onBarClick,
 }: {
   onBarClick: (index: number) => void;

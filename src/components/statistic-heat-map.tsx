@@ -6,7 +6,7 @@ import { ConfirmedPaymentRecord } from "@/types";
 import { flushSync } from "react-dom";
 const weekdays = ['日', '一', '二', '三', '四', '五', '六'];
 
-export default function AppStatisticHeatMap({
+export default function StatisticHeatMap({
   index,
   onCellClick,
 }: {

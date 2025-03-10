@@ -1,5 +1,5 @@
 import { SettingsIcon } from "lucide-react";
-import { Button } from "../components/ui/button";
+import { Button } from "./ui/button";
 import {
   Drawer,
   DrawerTrigger,
@@ -7,13 +7,13 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerDescription,
-} from "../components/ui/drawer";
-import AppSettingsStartDay from "./app-settings-start-day";
-import AppSettingsTheme from "./app-settings-theme";
+} from "./ui/drawer";
+import AppSettingsStartDay from "./settings-start-day";
+import AppSettingsTheme from "./settings-theme";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
-import AppSettingsInputLayout from "./app-settings-input-layout";
+import AppSettingsInputLayout from "./settings-input-layout";
 
-export default function AppSettings() {
+export default function Settings() {
   return <Drawer>
     <DrawerTrigger asChild>
       <Button type="button" title="设置" variant="outline" size="sm" className="px-2">

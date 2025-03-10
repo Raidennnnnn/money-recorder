@@ -2,7 +2,7 @@ import { TableHeader, TableRow, TableHead, TableBody, TableCell, Table } from ".
 import { ConfirmedPaymentRecord } from "@/types"
 import { CATEGORY_NAME } from "@/lib/category-related"
 
-export default function AppStatisticDayTable({ data }: { data: ConfirmedPaymentRecord[] }) {
+export default function StatisticDayTable({ data }: { data: ConfirmedPaymentRecord[] }) {
   return <Table id="day-table" className="mb-18">
     <TableHeader>
       <TableRow>

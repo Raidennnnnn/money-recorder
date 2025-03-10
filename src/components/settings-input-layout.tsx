@@ -3,14 +3,13 @@ import { RadioGroupItemButton } from "./ui/radio-group";
 import { ArrowUpToLine, ArrowDownToLine } from "lucide-react";
 import { useContext } from "react";
 import { AppInputLayoutContext } from "./app-input-layout-context";
-// import { flushSync } from "react-dom";
 
 const INPUT_LAYOUT_ICON_MAP = {
   up: <ArrowUpToLine className="w-4 h-4" />,
   down: <ArrowDownToLine className="w-4 h-4" />,
 }
 
-export default function AppSettingsInputLayout() {
+export default function SettingsInputLayout() {
   const { inputLayout, setInputLayout } = useContext(AppInputLayoutContext);
 
   return <div className="flex items-center mt-2">

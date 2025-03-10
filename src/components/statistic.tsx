@@ -1,11 +1,11 @@
-import AppStatisticMonthChart from "./app-statistic-month-chart";
-import AppStatisticHeatMap from "./app-statistic-heat-map";
+import AppStatisticMonthChart from "./statistic-month-chart";
+import AppStatisticHeatMap from "./statistic-heat-map";
 import { ConfirmedPaymentRecord } from "@/types";
 import { useState } from "react";
-import AppStatisticDayTable from "./app-statistic-day-table";
+import AppStatisticDayTable from "./statistic-day-table";
 import { flushSync } from "react-dom";
 
-export default function AppStatistic() {
+export default function Statistic() {
   const [index, setIndex] = useState(NaN);
   const [data, setData] = useState<ConfirmedPaymentRecord[]>([]);
 
