@@ -1,4 +1,4 @@
-import { Fragment, useContext, useMemo } from 'react';
+import { useContext, useMemo } from 'react';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from './ui/accordion';
 import { ConfirmedPaymentRecord } from '../types';
 import { SetPast12CyclesRecords } from './app-records-contexts';
@@ -49,8 +49,8 @@ function CategoryDetailListItemHeader({ date }: { date: string }) {
 function CategoryDetailListItemContent({ record, isLast }: { record: ConfirmedPaymentRecord, isLast: boolean }) {
   const setPast12CyclesRecords = useContext(SetPast12CyclesRecords);
 
-  return  <Fragment key={record.timeStamp}>
-    <div className={`${isLast ? "pt-2" : "py-2"} flex items-center justify-between`}>
+  return  <div className={`py-2 ${isLast ? "" : "mb-2 border-b border-border"}`} key={record.timeStamp}>
+    <div className={`flex items-center justify-between`}>
       <span className="text-muted-foreground">{new Date(record.timeStamp).toLocaleTimeString()}</span>
       <span className={`${record.removed ? "line-through" : ""}`}>{record.amount}</span>
       {
@@ -59,7 +59,12 @@ function CategoryDetailListItemContent({ record, isLast }: { record: ConfirmedPa
           : <XIcon className="text-destructive" onClick={() => toggleRecord(record.timeStamp)} />
       }
     </div>
-  </Fragment>
+    {
+      record.description && (
+        <div className="rounded-md bg-muted py-1 px-2 text-muted-foreground text-xs mt-1">{record.description}</div>
+      )
+    }
+  </div>
 
   function toggleRecord(timeStamp: number) {
     setPast12CyclesRecords((prev) => {

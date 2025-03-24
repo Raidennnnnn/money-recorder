@@ -31,7 +31,6 @@ export default function MoneyRecorderButton({
 
   return <Button
     type="button"
-    // title={String(category)}
     variant="outline"
     className={`relative justify-start h-fit w-full p-2.5 overflow-hidden select-none`}
     onTouchStart={handlePressStart}
@@ -86,7 +85,7 @@ export default function MoneyRecorderButton({
     setIsPressing(true);
 
     const timer = setTimeout(() => {
-      handleAddRecord(category, Number(unconfirmedRecords.amount));
+      handleAddRecord(category, Number(unconfirmedRecords.amount), unconfirmedRecords.description);
       setIsPressing(false);
     }, 500); // 长按时间阈值（毫秒）
     setPressTimer(timer);
@@ -104,13 +103,14 @@ export default function MoneyRecorderButton({
     setUnconfirmedRecords(prev => ({...prev, category}));
   }
 
-  function handleAddRecord(category: Category, amount: number) {
-    setUnconfirmedRecords({ amount: '', category: null });
+  function handleAddRecord(category: Category, amount: number, description?: string) {
+    setUnconfirmedRecords({ amount: '', category: null, description: '' });
     setPast12CyclesRecord(prev => [...prev, {
       timeStamp: new Date().getTime(),
       amount: Number(amount),
       category,
       removed: false,
+      description,
     }]);
   }
 }

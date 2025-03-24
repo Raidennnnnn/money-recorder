@@ -12,7 +12,7 @@ import AppSettingsStartDay from "./settings-start-day";
 import AppSettingsTheme from "./settings-theme";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import AppSettingsInputLayout from "./settings-input-layout";
-
+import AppSettingsLimit from "./settings-limit";
 export default function Settings() {
   return <Drawer>
     <DrawerTrigger asChild>
@@ -26,13 +26,14 @@ export default function Settings() {
           <DrawerTitle>设置</DrawerTitle>
         </DrawerHeader>
         <DrawerDescription>
-          设置应用的开始日期、主题和输入框位置
+          设置应用的开始日期、主题、输入框位置和限制
         </DrawerDescription>
       </VisuallyHidden>
       <div className="mt-4 mb-8 mx-4">
         <AppSettingsStartDay />
         <AppSettingsTheme />
         <AppSettingsInputLayout />
+        <AppSettingsLimit />
       </div>
     </DrawerContent>
   </Drawer>

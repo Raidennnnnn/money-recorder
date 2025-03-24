@@ -19,13 +19,13 @@ export const CATEGORY_NAME = {
 
 
 export const ICON: Record<Category, React.ReactNode> = {
-  [Category.CLOTH]: <FluentEmojiWomansClothes className="w-11! h-11!" />,
-  [Category.EAT]: <FluentEmojiChopsticks className="w-11! h-11!" />,
-  [Category.ENTERTAINMENT]: <FluentEmojiVideoGame className="w-11! h-11!" />,
-  [Category.TRANSPORTATION]: <FluentEmojiSportUtilityVehicle className="w-11! h-11!" />,
-  [Category.HEALTH]: <FluentEmojiFaceWithThermometer className="w-11! h-11!" />,
-  [Category.DAILY]: <FluentEmojiSoap className="w-11! h-11!" />,
-  [Category.OTHER]: <FluentEmojiMoneyWithWings className="w-11! h-11!" />,
+  [Category.CLOTH]: <FluentEmojiWomansClothes className="w-10! h-10!" />,
+  [Category.EAT]: <FluentEmojiChopsticks className="w-10! h-10!" />,
+  [Category.ENTERTAINMENT]: <FluentEmojiVideoGame className="w-10! h-10!" />,
+  [Category.TRANSPORTATION]: <FluentEmojiSportUtilityVehicle className="w-10! h-10!" />,
+  [Category.HEALTH]: <FluentEmojiFaceWithThermometer className="w-10! h-10!" />,
+  [Category.DAILY]: <FluentEmojiSoap className="w-10! h-10!" />,
+  [Category.OTHER]: <FluentEmojiMoneyWithWings className="w-10! h-10!" />,
 }
 
 export const BACKGROUND_COLORS: Record<Category, string> = {

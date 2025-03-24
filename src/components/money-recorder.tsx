@@ -13,7 +13,7 @@ export default function MoneyRecorder() {
   const [selectedCategory, setSelectedCategory] = useState<Category>();
 
   return <div className="flex flex-col gap-2">
-    <div className={`flex flex-col gap-2 transition duration-300 ${inputLayout === 'up' ? 'translate-y-11' : ''} `}>
+    <div className={`flex flex-col gap-2 transition duration-300 ${inputLayout === 'up' ? 'translate-y-22' : ''} `}>
       {
         categorys.map((category) => <MoneyRecorderButton
           key={category}
@@ -22,7 +22,7 @@ export default function MoneyRecorder() {
         />)
       }
     </div>
-    <MoneyRecorderInput className={`transition duration-300 ${inputLayout === 'up' ? '-translate-y-[644px]' : ''} `} />
+    <MoneyRecorderInput className={`transition duration-300 ${inputLayout === 'up' ? '-translate-y-[612px]' : ''} `} />
     <MoneyRecorderTotal />
     <CategoryDetail category={selectedCategory} onClose={() => setSelectedCategory(undefined)}  />
   </div>
