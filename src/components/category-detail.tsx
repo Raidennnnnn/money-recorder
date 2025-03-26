@@ -21,7 +21,7 @@ export default function CategoryDetail({
     [currentCycleRecords, category]
   );
 
-  return <Drawer open={!!category} onClose={onClose}>
+  return <Drawer open={category !== undefined} onClose={onClose}>
     <DrawerContent className="min-h-[500px]">
       <VisuallyHidden>
         <DrawerHeader>
